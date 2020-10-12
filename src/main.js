@@ -23,11 +23,17 @@ const firebaseConfig = {
   measurementId: "G-8HC9YTEL6M"
 };
 
+import areYouSure from './components/areYouSure'
+const dialogAreYouSure = ModalDialogs.create(areYouSure, 'content')
+
+let  googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 firebase.initializeApp(firebaseConfig)
 const db = firebase.firestore()
 
 Vue.prototype.$db = db
 Vue.prototype.$firebase = firebase
+Vue.prototype.$googleAuthProvider = googleAuthProvider
+Vue.prototype.$areYouSure = dialogAreYouSure
 
 Vue.use(ModalDialogs) 
 Vue.use(Vuetify)

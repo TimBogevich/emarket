@@ -1,90 +1,151 @@
 <template>
-  <div v-if="cartLength">
-    <v-row class="justify-center mb-5">
-      <v-btn color="success">
-        Купить за {{cartTotalPrice}} €
-      </v-btn>
-    </v-row>
-    <v-row class="justify-center">
-
-      <v-flex>
+  <v-row class="justify-center mx-0">
+    <v-flex xs12 md8>
+        <div v-if="cartLength">
+          <div v-if="showCard">
+            <v-credit-card :direction="cardDirection" @change="creditInfoChanged" :trans="translations"/>
+          </div>
+          <v-row v-if="!showCard" class="justify-center mb-5">
+            <v-btn @click="toBuy()" color="success">
+              Купить за {{cartTotalPrice.toFixed(2)}} €
+            </v-btn>
+          </v-row>
+          <v-row v-if="showCard" class="justify-center mb-5">
+            <v-btn @click="makeOrder()" color="error">
+              Купить за {{cartTotalPrice.toFixed(2)}} €
+            </v-btn>
+          </v-row>
+          
         <v-card
-        class="ma-4 py-0"
-        max-height="150"
-        v-for="(item, index) in cart" :key="index"
+        height="100"
         >
-        <v-row class="align-top py-0">
-          <v-col cols=1 class="ma-5">
-            <v-img max-width="100" :src="item.image"></v-img>
-          </v-col>
-          <v-col cols=8 >
-            <v-card-title primary-title>
-              {{item.productName}}
-            </v-card-title>
-            <v-card-text>
-              {{item.desc}}
-              <br>
-              <a :href="item.image" target="_blank">Ссылка на medpex</a>
-            </v-card-text>
-          </v-col>
-          <v-col cols=2 class="ma-5">
-            <v-row class="mb-2 align-center justify-end">
-              <h3>
-                {{item.productPrice}}
-              </h3>
-            </v-row>
-            <v-row class="mb-2 align-center justify-end">
-              <v-flex xs3 mr-2>
-                <v-select
-                  :items="selectCount"
-                  v-on:input="item.selectCountSelected = $event"
-                  :value="item.selectCountSelected || 1"
-                ></v-select>
-              </v-flex>
-              <v-flex xs8>
-                <v-btn @click="deleteFromCart(index)" block text>Удалить</v-btn>
-              </v-flex>
-            </v-row>
-          </v-col>
-        
-        </v-row>
+          <v-row
+            align="center"
+            no-gutters
+            style="height: 100%;"
+
+          >
+            <v-flex>
+              <v-row class="justify-center">
+                <v-icon x-large>
+                  mdi-face-agent
+                </v-icon>
+              </v-row>
+              <v-row class="justify-center">
+                Сервис
+              </v-row>
+              <v-row class="justify-center">
+                <strong>
+                  50 €
+                </strong>
+              </v-row>
+            </v-flex>
+            <v-flex>
+              <v-row class="justify-center">
+                <v-icon x-large>
+                  mdi-truck-fast
+                </v-icon>
+              </v-row>
+              <v-row class="justify-center">
+                Доставка DHL
+              </v-row>
+              <v-row class="justify-center">
+                <strong>
+                  37.99 €
+                </strong>
+              </v-row>
+            </v-flex>
+          </v-row>
         </v-card>
-      </v-flex>
-    </v-row>
-  </div>
-  <div v-else>
-    Ваша корзина пуста, добавьте что нибудь
-  </div>
+
+          <item 
+          mode = "cart"
+          v-for="(item, index) in cart" :key="index" 
+          :itemsCategory = "item"
+          :ind = "index" />
+        </div>
+        <div v-else>
+          <v-row class="justify-center" >
+              <v-img max-width="350" :src="require('../assets/empty_cart.png')" />
+          </v-row>
+        </div>
+    </v-flex>
+  </v-row>
+
 </template>
 
 
 <script>
   import {get, sync} from 'vuex-pathify'
+  import item from './item'
+  import VCreditCard from 'v-credit-card';
+  import 'v-credit-card/dist/VCreditCard.css';
 
   export default {
+    components : {item, VCreditCard},
     data() {
       return {
-        selectCount : [
-          {text : 1, value : 1},
-          {text : 2, value : 2},
-          {text : 3, value : 3},
-          {text : 4, value : 4},
-          {text : 5, value : 5},
-          {text : 10, value : 10},
-          {text : 15, value : 15},
-          {text : 20, value : 20},
-          {text : 25, value : 25},
-        ],
+        showCard : false,
+        cardData : {},
+        cardValid : false,
+        translations : {
+          name: {
+              label: 'Имя владельца',
+              placeholder: 'например IVANOV IVAN'
+          },
+          card: {
+              label: 'Номер карты',
+              placeholder: 'Номер карты'
+          },
+          expiration: {
+              label: 'дата'
+          },
+          security: {
+              label: 'Код безопасности',
+              placeholder: 'CVV'
+          }
+        }
       }
     },
     computed: {
       cart: sync("general/cart"),
       cartLength: get("general/cartLength"),
       cartTotalPrice: get("general/cartTotalPrice"),
+      userDatIsValid: get("general/userDatIsValid"),
+      user: get("general/user"),
+      displaySize() {
+        return this.$vuetify.breakpoint.name
+      },
+      cardDirection() {
+        return ["sm", "xs"].includes(this.$vuetify.breakpoint.name) ? "column" : "row"
+      }
     },
     methods: {
-      deleteFromCart(index) {
-        this.$store.dispatch("general/deleteFromCart", index)
+      creditInfoChanged(values) {
+        this.cardValid = Boolean(values.cardNumber) && Boolean(values.expiration) && Boolean(values.name) &&  Boolean(values.security)
+        this.cardData = values
+      },
+      async toBuy() {
+        if(!this.user) {
+          let response = await this.$areYouSure("Необходимо авторизоваться")
+          if(response) {
+            this.$router.push("/account")
+          }
+          return
+        }
+        if(!this.userDatIsValid) {
+          let response = await this.$areYouSure("Ваша контактная информация не полная, перейти к редактированию?")
+          if(response) {
+            this.$router.push("/account")
+          } else {
+            return
+          }
+        } else {
+          this.showCard = true
+        }
+      },
+      async makeOrder() {
+        this.$store.dispatch("general/makeOrder")
       }
     },
   }
@@ -92,5 +153,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
 </style>

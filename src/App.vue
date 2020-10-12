@@ -1,60 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar
-      app
-      clipped-left
-      color="red darken-4"
-      dark
-      scroll-target="#scrolling-techniques-6"
-    >
-      <v-row class="align-center">
-        <v-app-bar-nav-icon @click="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
-        <v-flex xs2>
-          <v-btn to="/" text class="ma-3">
-            <v-icon>mdi-plus-thick</v-icon>
-            <h3 class="hidden-xs-only">
-              Немецкая аптека
-            </h3>
-          </v-btn>
-        </v-flex>
-        <v-flex xs6 pt-5  class="align-center hidden-md-and-down">
-          <v-text-field
-            dense
-            filled
-            rounded
-            label="Имя лекарства или PZN"
-            outlined
-          ></v-text-field>
-        </v-flex>
-        <v-spacer></v-spacer>
-        <v-btn
-        to="/account" 
-        text>
-          <span class="hidden-md-and-down">
-            Аккаунт
-          </span> 
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
-
-        <v-badge
-        bordered
-        :value="cartLength"
-        color="error"
-        class="mr-5"
-        :content="cartLength"
-        overlap>
-          <v-btn
-          to="/cart" 
-          text>
-            <span class="hidden-md-and-down">
-              Корзина
-            </span> 
-            <v-icon>mdi-cart</v-icon>
-          </v-btn>
-        </v-badge>
-      </v-row>
-    </v-app-bar>
-
+    <appBar />
     <v-progress-linear
       v-if="globalLoader"
       indeterminate
@@ -64,12 +10,36 @@
     ></v-progress-linear>
 
     <v-navigation-drawer
+      disable-resize-watcher
       v-model="drawer"
       app
       clipped
     >
+      <v-list >
+        <v-list-item link to="/account">
+          <v-list-item-content>
+            <v-list-item-title>
+              <v-icon>
+                mdi-account
+              </v-icon>
+              Аккаунт
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
-      <v-list>
+        <v-list-item link to="/orders">
+          <v-list-item-content >
+            <v-list-item-title>
+              <v-icon>
+                mdi-truck-fast
+              </v-icon>
+              Мои заказы
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
         <v-list-item
           v-for="(text, index) in categories"
           :key="index"
@@ -81,31 +51,52 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list>
-        <v-list-item link v-for="item in bookmarks" :key="item.name" :to="item.url">
-          <v-list-item-content >
-            <v-list-item-title>{{item.name}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+
+      <template v-slot:append >
+        <v-list>
+          <v-list-item link v-for="item in bookmarks" :key="item.name" :to="item.url">
+            <v-list-item-content >
+              <v-list-item-title>{{item.name}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item v-show="user" link @click="logOut()">
+            <v-list-item-content >
+              <v-list-item-title>
+                <v-icon>mdi-exit-run</v-icon>
+                Выход
+              </v-list-item-title>
+              
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
+
     </v-navigation-drawer>
 
 
     <v-main>
       <v-container
-        class="py-8 px-6"
+        :class="$route.path === '/' ? 'ma-0 pa-0' : null"
         fluid
       >
         <router-view/>
       </v-container>
     </v-main>
+
+    <dialogs-wrapper></dialogs-wrapper>
+
   </v-app>
 </template>
 
 <script>
-import {get} from 'vuex-pathify'
+import {get,sync} from 'vuex-pathify'
+import firebase from 'firebase'
+
+import appBar from "./components/appBar"
 
   export default {
+    components : {appBar},
     data: () => ({
       bookmarks: [
         {
@@ -117,13 +108,12 @@ import {get} from 'vuex-pathify'
           url : "/delivery"
         },
       ],
-      drawer: null,
     }),
     computed: {
       categories : get("general/categories"),
       globalLoader : get("general/globalLoader"),
-      cartLength : get("general/cartLength"),
-
+      user: sync("general/user"),
+      drawer: sync("general/drawer"),
     },
     methods: {
       openCategory(value) {
@@ -131,10 +121,26 @@ import {get} from 'vuex-pathify'
           this.$router.replace("/" )
         }
         this.$router.replace("/categiory/" + value.name )
+      },
+      logOut() {
+        this.$store.dispatch("general/logOut")
+      },
+      login(){
+        let store = this.$store
+        firebase.auth().onAuthStateChanged(async (user) => {
+          if (user) {
+            store.dispatch("general/retrieveUser", user.uid)
+            store.dispatch("general/retrieveCard", user.uid)
+          } else {
+            let logout = await firebase.auth().signOut()
+            this.user = null
+          }
+        });
       }
     },
     mounted() {
       this.$store.dispatch("general/loadCategories")
+      this.login()
     },
   }
 </script>
