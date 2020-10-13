@@ -25,9 +25,8 @@
     },
     methods: {
       async load() {
-        let snapshot = await this.$firebase.firestore().collection('items').where('pzn','==', this.pzn).limit(1).get()
-        let a = snapshot.docs.map(i => i.data())
-        this.item = a[0]
+        let categoryItems = await this.$algolia.search(this.pzn,{})
+        this.item = categoryItems.hits[0]
       }
     },
     watch: {

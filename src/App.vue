@@ -41,12 +41,12 @@
         <v-divider></v-divider>
 
         <v-list-item
-          v-for="(text, index) in categories"
+          v-for="(cat, index) in categories"
           :key="index"
           link
         >
-          <v-list-item-content @click="openCategory(text)">
-            <v-list-item-title>{{ $t(`general.${text.name}`) }}</v-list-item-title>
+          <v-list-item-content @click="openCategory(cat.text)">
+            <v-list-item-title>{{ $t(`general.${cat.text}`) }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -124,7 +124,7 @@ import appBar from "./components/appBar"
         if(this.$route.path !== "/") {
           this.$router.replace("/" )
         }
-        this.$router.replace("/categiory/" + value.name )
+        this.$router.replace("/categiory/" + value )
       },
       logOut() {
         this.$store.dispatch("general/logOut")

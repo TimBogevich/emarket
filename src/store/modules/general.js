@@ -3,6 +3,13 @@ import axios from 'axios'
 import { make, set, dispatch } from 'vuex-pathify'
 import router from '@/router'
 
+let algoliaPreferences = {
+  hitsPerPage: 10,
+  attributesToSnippet: "*:20",
+  page: 0,
+  facetFilters: null
+ }
+
 const  state =  {
   items : [],
   orders : [],
@@ -57,37 +64,38 @@ const getters = {
 const actions = {
   async loadItem({commit,state}, router) {
     commit("SET_GLOBAL_LOADER", true)
-    let categoryItems = state.items.find(i=> i.category === router.category)
-    if(!categoryItems){
-      let snapshot = await this._vm.$firebase.firestore().collection('items').where('category','==',router.category).orderBy('pzn')
-      let cursor = await snapshot.limit(10).get()
-      let items =  cursor.docs.map(element => element.data());
-      Vue.set(state.items, state.items.length, {category : router.category, items : items} )
+    let category = state.items.find(i=> i.category === router.category)
+    if(!category){
+      let preferences = Object.assign({}, algoliaPreferences)
+      preferences.facetFilters = "category:" + router.category
+      let categoryItems = await this._vm.$algolia.search("",preferences)
+      Vue.set(state.items, state.items.length, {category : router.category, curPage : 0, nbPages : categoryItems.nbPages, items : categoryItems.hits} )
+      commit("SET_ITEMS", state.items)
+      commit("SET_GLOBAL_LOADER", false)
     }
-    commit("SET_GLOBAL_LOADER", false)
   },
+
   async loadMore({commit, state}, router) {
     commit("SET_GLOBAL_LOADER", true)
-    let snapshot = await this._vm.$firebase.firestore().collection('items').where('category','==',router.category).orderBy('pzn')
-    let categoryItems = state.items.find(i=> i.category === router.category)
-    let lastDocument = categoryItems.items[categoryItems.items.length - 1]
-    let cursor = await snapshot.startAfter(lastDocument.pzn).limit(5).get()
-    let items =  cursor.docs.map(element => element.data());
-    items.forEach(i => {
-      Vue.set(categoryItems.items, categoryItems.items.length, i )
-    })
+    let category = state.items.find(i=> i.category === router.category)
+    if (category && category.curPage < category.nbPages) {
+      let preferences = Object.assign({}, algoliaPreferences)
+      preferences.facetFilters = "category:" + router.category
+      preferences.page = preferences.page + 1
+      let categoryItems = await this._vm.$algolia.search("",preferences)
+      category.curPage = category.curPage + 1
+      category.items = category.items.concat(categoryItems.hits)
+      commit("SET_ITEMS", state.items)
+    }
     commit("SET_GLOBAL_LOADER", false)
   },
 
   async loadCategories({commit}) {
-    let snapshot = await this._vm.$firebase.firestore().collection('categories').get()
-    let categories =  snapshot.docs.map(element => {
-      return {
-        name : element.id,
-        doc : element.data()
-      }
-    });
-    commit("SET_CATEGORIES", categories)
+    let response = await this._vm.$algolia.search('', {facets: '*', hitsPerPage: 0})
+    let cat = Object.keys(response.facets.category).map((i, index) => {
+      return {text : i}
+    })
+    commit("SET_CATEGORIES", cat)
   },
   async saveUser({commit,state}) {
     let snapshot = await this._vm.$firebase.firestore().collection('users')

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row class="justify-center mx-0">
+      <v-row class="justify-center mx-0">
       <v-flex xs12 md8>
         <item 
         mode = "category"
@@ -10,6 +10,15 @@
     </v-row>
 
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
+
+
+    <v-pagination
+      class="float_page"
+      v-model="page"
+      :length="4"
+      prev-icon="mdi-menu-left"
+      next-icon="mdi-menu-right"
+    ></v-pagination>
   </div>
 </template>
 
@@ -22,6 +31,7 @@ export default {
   components : {item, MugenScroll},
   data() {
     return {
+      page: 1,
     }
   },
   computed: {
@@ -59,5 +69,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+  .float_page {
+    position: fixed; 
+    bottom: 0;
+    width: 70%;
+  }
 </style>
