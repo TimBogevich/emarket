@@ -159,7 +159,7 @@ const actions = {
 
   async loadOrders({commit}, uid) {
     let ordersRef = this._vm.$db.collection('users').doc(uid).collection('orders')
-    let orders = await ordersRef.get()
+    let orders = await ordersRef.orderBy('date', 'desc').get()
     orders = orders.docs.map(i => {
       let obj = i.data()
       obj.id = i.id

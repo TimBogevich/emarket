@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.css'
 import '@mdi/font/css/materialdesignicons.css'
 import i18n from './i18n'
 import * as ModalDialogs from 'vue-modal-dialogs'
+import algolia from './algoliaConf'
 
 Vue.config.productionTip = false
 
@@ -34,6 +35,8 @@ Vue.prototype.$db = db
 Vue.prototype.$firebase = firebase
 Vue.prototype.$googleAuthProvider = googleAuthProvider
 Vue.prototype.$areYouSure = dialogAreYouSure
+Vue.prototype.$algolia = algolia
+
 
 Vue.use(ModalDialogs) 
 Vue.use(Vuetify)

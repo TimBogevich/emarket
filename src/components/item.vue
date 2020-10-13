@@ -44,7 +44,7 @@
 
 
       <v-row v-else class="align-top my-2 mx-10">
-        <v-flex xs2 md1>
+        <v-flex xs2 md1 class="mt-3">
           <v-img max-width="100" :src="itemsCategory.image"></v-img>
         </v-flex>
         <v-flex xs10 md9>

@@ -1,10 +1,13 @@
 <template>
   <div>
-
-    <item 
-    mode = "category"
-    v-for="(item, index) in itemsCategory" :key="index" 
-    :itemsCategory = "item" />
+    <v-row class="justify-center mx-0">
+      <v-flex xs12 md8>
+        <item 
+        mode = "category"
+        v-for="(item, index) in itemsCategory" :key="index" 
+        :itemsCategory = "item" />
+      </v-flex>
+    </v-row>
 
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
   </div>

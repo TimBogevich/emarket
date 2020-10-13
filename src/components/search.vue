@@ -35,9 +35,6 @@
 
 
 <script>
-const algoliasearch = require("algoliasearch");
-const client = algoliasearch("WXZBTON7QZ", "0538989e5ef2c0ce383f06e4c1183f04");
-const index = client.initIndex("apotheke");
 
 export default {
   data() {
@@ -65,7 +62,7 @@ export default {
   watch: {
     async search(val,oldVal) {
       this.loading = true
-      let result = await index.search(val, this.algoliaPreferences)
+      let result = await this.$algolia.search(val, this.algoliaPreferences)
       this.items =  result.hits.map(i=> {
         i.text = i.productName
         return i
