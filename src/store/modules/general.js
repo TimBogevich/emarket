@@ -5,6 +5,7 @@ import router from '@/router'
 
 const  state =  {
   items : [],
+  orders : [],
   drawer : null,
   categories : [],
   categoryPage : 1,
@@ -137,13 +138,43 @@ const actions = {
       await this._vm.$db.collection('users').doc(state.user.uid).collection('cart').doc(item.pzn).delete()
     }
   },
-  async makeOrder({commit,state}) {
-    let obj = {value : JSON.stringify(state.cart)}
-    debugger
-    let response = await this._vm.$db.collection('users')
-      .doc(state.user.uid).collection('orders').doc().set(obj)
-    debugger
-    console.log(response)
+  async makeOrder({commit,state, dispatch, getters}) {
+    let order = this._vm.$db.collection('users').doc(state.user.uid).collection('orders')
+    let newDoc = order.doc()
+    let doc = await newDoc.set({date : Date.now() , status : 1, price : getters.cartTotalPrice})
+    let items = order.doc(newDoc.id).collection('items')
+    state.cart.forEach(i => items.doc().set(i))
+    commit("SET_CART", [])
+
+    await this._vm.$db.collection('orders').doc().set({id : newDoc.id, path : newDoc.path, date : Date.now(), price : getters.cartTotalPrice})
+
+    let cart = await this._vm.$db.collection('users').doc(state.user.uid).collection('cart').get()
+    const batch = this._vm.$db.batch();
+    cart.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    await batch.commit();
+    await dispatch("loadOrders")
+  },
+
+  async loadOrders({commit}, uid) {
+    let ordersRef = this._vm.$db.collection('users').doc(uid).collection('orders')
+    let orders = await ordersRef.get()
+    orders = orders.docs.map(i => {
+      let obj = i.data()
+      obj.id = i.id
+      return obj
+    })
+
+    let result = orders.map(async i => {
+      let docs = await ordersRef.doc(i.id).collection('items').get()
+      docs = docs.docs.map(i => i.data())
+      i.docs = docs
+      return i
+    })
+    await Promise.all(result)
+    commit("SET_ORDERS", orders)
+
   },
   async logOut({commit,state}) {
     let response = await this._vm.$areYouSure("Выйти?")

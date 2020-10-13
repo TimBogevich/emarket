@@ -37,6 +37,7 @@ Vue.prototype.$areYouSure = dialogAreYouSure
 
 Vue.use(ModalDialogs) 
 Vue.use(Vuetify)
+Vue.use(require('vue-moment'));
 const vuetifyOptions = {   
   icons: {
     iconfont: 'mdi'

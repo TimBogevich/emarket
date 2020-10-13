@@ -100,6 +100,10 @@ import appBar from "./components/appBar"
     data: () => ({
       bookmarks: [
         {
+          name : "Контакты",
+          url : "/contacts"
+        },
+        {
           name : "О магазине",
           url : "/about"
         },
@@ -131,6 +135,7 @@ import appBar from "./components/appBar"
           if (user) {
             store.dispatch("general/retrieveUser", user.uid)
             store.dispatch("general/retrieveCard", user.uid)
+            store.dispatch("general/loadOrders", user.uid)
           } else {
             let logout = await firebase.auth().signOut()
             this.user = null
