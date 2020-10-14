@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-card
+    color="#FEFEFE" 
     class="my-2"
     >
       <v-row class="mx-4" v-if="isMobile">
@@ -20,7 +21,7 @@
             <v-card-text class="ml-1 mr-1 mt-0 pt-0">
               {{itemsCategory.desc}}
               <br v-if="mode==='category'">
-              <a v-if="mode==='category'" :href="itemsCategory.image" target="_blank">Ссылка на medpex</a>
+              <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">Ссылка на medpex</a>
             </v-card-text>
           </v-flex>
         </v-row>
@@ -34,8 +35,8 @@
             ></v-select>
           </v-flex>
           <v-flex>
-            <v-btn class="ma-0 pa-0" v-if="mode==='category'" @click="toCart(itemsCategory)" block color="success">В корзину</v-btn>
-            <v-btn class="ma-0 pa-0" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" block text>Удалить</v-btn>
+            <v-btn small class="ma-0 pa-0" v-if="mode==='category'" @click="toCart(itemsCategory)" block color="success">В корзину</v-btn>
+            <v-btn small class="ma-0 pa-0" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" block text>Удалить</v-btn>
           </v-flex>
 
         </v-row>
@@ -54,7 +55,7 @@
           <v-card-text >
             {{itemsCategory.desc}}
             <br v-if="mode==='category'">
-            <a v-if="mode==='category'" :href="itemsCategory.image" target="_blank">Ссылка на medpex</a>
+            <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">Ссылка на medpex</a>
           </v-card-text>
         </v-flex>
         <v-flex xs12 md2 >
@@ -72,8 +73,8 @@
               ></v-select>
             </v-flex>
             <v-flex xs8>
-              <v-btn v-if="mode==='category'" @click="toCart(itemsCategory)" block color="success">В корзину</v-btn>
-              <v-btn v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" block text>Удалить</v-btn>
+              <v-btn small v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
+              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
             </v-flex>
           </v-row>
         </v-flex>

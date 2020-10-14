@@ -5,7 +5,6 @@
       clipped-left
       color="red darken-4"
       dark
-      scroll-target="#scrolling-techniques-6"
     >
       <v-row class="align-center">
         <v-app-bar-nav-icon 

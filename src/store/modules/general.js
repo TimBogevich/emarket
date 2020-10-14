@@ -17,6 +17,8 @@ const  state =  {
   categories : [],
   categoryPage : 1,
   globalLoader : false,
+  filters : [],
+  filtersSelected : [],
   cursors : [],
   cart : [],
   user : null,
@@ -62,7 +64,7 @@ const getters = {
 }
 
 const actions = {
-  async loadItem({commit,state}, router) {
+  async loadItem({commit,state}, router, filters) {
     commit("SET_GLOBAL_LOADER", true)
     let category = state.items.find(i=> i.category === router.category)
     if(!category){
@@ -96,6 +98,22 @@ const actions = {
       return {text : i}
     })
     commit("SET_CATEGORIES", cat)
+  },
+
+  async loadFilters({commit, state}, router) {
+    commit("SET_FILTERS", [])
+    commit("SET_FILTERS_SELECTED", [])
+    let params = {
+      facets: '*', 
+      hitsPerPage: 0,
+      "facetFilters": [["category:" + router.category]]
+    }
+    let response = await this._vm.$algolia.search('', params)
+    let filters = Object.entries(response.facets.packType).map(i => {
+      return {text : i[0], count : i[1]}
+    }) 
+    commit("SET_FILTERS", filters)
+
   },
   async saveUser({commit,state}) {
     let snapshot = await this._vm.$firebase.firestore().collection('users')

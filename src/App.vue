@@ -118,6 +118,7 @@ import appBar from "./components/appBar"
       globalLoader : get("general/globalLoader"),
       user: sync("general/user"),
       drawer: sync("general/drawer"),
+      filtersSelected: sync("general/filtersSelected"),
     },
     methods: {
       openCategory(value) {

@@ -2,6 +2,7 @@
   <div>
       <v-row class="justify-center mx-0">
       <v-flex xs12 md8>
+        <filters :key="reloadKey" />
         <item 
         mode = "category"
         v-for="(item, index) in itemsCategory" :key="index" 
@@ -12,13 +13,13 @@
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
 
 
-    <v-pagination
-      class="float_page"
-      v-model="page"
-      :length="4"
-      prev-icon="mdi-menu-left"
-      next-icon="mdi-menu-right"
-    ></v-pagination>
+      <v-pagination
+        class="float_page"
+        v-model="page"
+        :length="4"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+      ></v-pagination>
   </div>
 </template>
 
@@ -26,12 +27,14 @@
 import {get,sync} from 'vuex-pathify'
 import item from './item'
 import MugenScroll from 'vue-mugen-scroll'
+import filters from './filters'
 
 export default {
-  components : {item, MugenScroll},
+  components : {item, MugenScroll, filters},
   data() {
     return {
       page: 1,
+      reloadKey : -1,
     }
   },
   computed: {
@@ -47,21 +50,26 @@ export default {
 
   watch: {
     router(newRouter,oldRouter) {
-      this.loadCategories()
-    }
+      this.loadItems()
+      this.reloadKey -= 1;
+    },
   },
 
   methods: {
-    loadCategories() {
+    loadItems() {
       this.$store.dispatch("general/loadItem", this.router)
     },
     loadMore() {
       this.$store.dispatch("general/loadMore", this.router)
     },
+    comparator(a, b) {
+      debugger
+      return a.text == b.text;
+    },
   },
 
   mounted() {
-    this.loadCategories()
+    this.loadItems()
   },
 
 }
@@ -72,6 +80,7 @@ export default {
   .float_page {
     position: fixed; 
     bottom: 0;
-    width: 70%;
+    width: 80%;
   }
+
 </style>

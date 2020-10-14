@@ -1,6 +1,8 @@
 {
   "general": {
     "vitamins": "Vitamins",
-    "cosmetics": "Cosmetics"
+    "cosmetics": "Cosmetics",
+    "diet": "Diet",
+    "flu": "Flu"
   }
 }

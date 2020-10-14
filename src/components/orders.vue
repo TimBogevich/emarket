@@ -1,7 +1,7 @@
 <template>
   <v-row class="justify-center">
-    <v-flex class="my-2" xs12 md8 v-for="(item, index) in orders" :key="index">
-      <v-card >
+    <v-flex class="" xs12 md8 v-for="(item, index) in orders" :key="index">
+      <v-card color="#FEFEFE" class="my-5">
         <v-card-title primary-title>
           Номер заказа: {{item.date}}
           <v-spacer></v-spacer>
@@ -59,6 +59,7 @@
           </v-card>
         </v-flex>
       </v-card>
+
     </v-flex>
 
 
@@ -76,5 +77,5 @@
 </script>
 
 <style lang="scss" scoped>
-
+  
 </style>
