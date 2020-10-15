@@ -27,12 +27,23 @@
       filtersSelected: sync("general/filtersSelected"),
       router() {
         return this.$route.params
+      },
+      filtersSelectedLength() {
+        return this.filtersSelected.length
       }
     },
     methods: {
       comparator(a, b) {
         return a?.text == b?.text
       },
+    },
+    watch: {
+      filtersSelectedLength: {
+        handler: function(val, oldVal) {
+          this.$store.dispatch("general/loadItem", this.router)
+        },
+        deep: true
+      }
     },
     mounted() {
       this.$store.dispatch("general/loadFilters", this.router)

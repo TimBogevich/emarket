@@ -37,16 +37,23 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+      </v-list>
 
         <v-divider></v-divider>
+      <v-list >
 
         <v-list-item
           v-for="(cat, index) in categories"
           :key="index"
+          :to="`/categiory/${cat.text}`"
           link
         >
-          <v-list-item-content @click="openCategory(cat.text)">
-            <v-list-item-title>{{ $t(`general.${cat.text}`) }}</v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title>{{ $t(`general.${cat.text}`) }}
+              <span class="text--disabled text-caption">
+                {{cat.count}}
+              </span>
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -121,12 +128,6 @@ import appBar from "./components/appBar"
       filtersSelected: sync("general/filtersSelected"),
     },
     methods: {
-      openCategory(value) {
-        if(this.$route.path !== "/") {
-          this.$router.replace("/" )
-        }
-        this.$router.replace("/categiory/" + value )
-      },
       logOut() {
         this.$store.dispatch("general/logOut")
       },

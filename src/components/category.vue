@@ -2,7 +2,7 @@
   <div>
       <v-row class="justify-center mx-0">
       <v-flex xs12 md8>
-        <filters :key="reloadKey" />
+        <filters v-if="showFilters" :key="reloadKey" />
         <item 
         mode = "category"
         v-for="(item, index) in itemsCategory" :key="index" 
@@ -13,13 +13,19 @@
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
 
 
-      <v-pagination
-        class="float_page"
-        v-model="page"
-        :length="4"
-        prev-icon="mdi-menu-left"
-        next-icon="mdi-menu-right"
-      ></v-pagination>
+
+      <v-btn
+        class="float_filter"
+        color="primary"
+        fab
+        @click="showFilters = !showFilters"
+        large
+        dark
+        bottom
+      >
+        <v-icon>mdi-filter</v-icon>
+      </v-btn>
+
   </div>
 </template>
 
@@ -33,6 +39,7 @@ export default {
   components : {item, MugenScroll, filters},
   data() {
     return {
+      showFilters : false,
       page: 1,
       reloadKey : -1,
     }
@@ -40,8 +47,7 @@ export default {
   computed: {
     items: get("general/items"),
     itemsCategory() {
-      let itemsCategory = this.items.find(i => i.category === this.router.category)
-      return itemsCategory ? itemsCategory.items : []
+      return this.items.items ? this.items.items : []
     },
     router() {
       return this.$route.params
@@ -81,6 +87,10 @@ export default {
     position: fixed; 
     bottom: 0;
     width: 80%;
+  }
+  .float_filter {
+    position: fixed; 
+    bottom: 10px;
   }
 
 </style>

@@ -3,12 +3,6 @@ import axios from 'axios'
 import { make, set, dispatch } from 'vuex-pathify'
 import router from '@/router'
 
-let algoliaPreferences = {
-  hitsPerPage: 10,
-  attributesToSnippet: "*:20",
-  page: 0,
-  facetFilters: null
- }
 
 const  state =  {
   items : [],
@@ -64,40 +58,48 @@ const getters = {
 }
 
 const actions = {
-  async loadItem({commit,state}, router, filters) {
+  async loadItem({commit,state}, router) {
     commit("SET_GLOBAL_LOADER", true)
-    let category = state.items.find(i=> i.category === router.category)
-    if(!category){
-      let preferences = Object.assign({}, algoliaPreferences)
-      preferences.facetFilters = "category:" + router.category
-      let categoryItems = await this._vm.$algolia.search("",preferences)
-      Vue.set(state.items, state.items.length, {category : router.category, curPage : 0, nbPages : categoryItems.nbPages, items : categoryItems.hits} )
-      commit("SET_ITEMS", state.items)
-      commit("SET_GLOBAL_LOADER", false)
-    }
+    let preferences = {
+      hitsPerPage: 10,
+      attributesToSnippet: "*:20",
+      page: 0,
+      facetFilters: []
+     }
+    preferences.facetFilters.push(["category:" + router.category])
+    preferences.facetFilters.push(state.filtersSelected.map(i => "packType:" + i.text))
+    let categoryItems = await this._vm.$algolia.search("",preferences)
+    commit("SET_ITEMS", {category : router.category, curPage : 0, nbPages : categoryItems.nbPages, items : categoryItems.hits})
+    commit("SET_GLOBAL_LOADER", false)
   },
 
   async loadMore({commit, state}, router) {
     commit("SET_GLOBAL_LOADER", true)
-    let category = state.items.find(i=> i.category === router.category)
-    if (category && category.curPage < category.nbPages) {
-      let preferences = Object.assign({}, algoliaPreferences)
-      preferences.facetFilters = "category:" + router.category
-      preferences.page = preferences.page + 1
-      let categoryItems = await this._vm.$algolia.search("",preferences)
-      category.curPage = category.curPage + 1
-      category.items = category.items.concat(categoryItems.hits)
-      commit("SET_ITEMS", state.items)
-    }
+    let preferences = {
+      hitsPerPage: 10,
+      attributesToSnippet: "*:20",
+      page: 0,
+      facetFilters: []
+     }
+     preferences.facetFilters.push(["category:" + router.category])
+     state.filtersSelected.forEach(i => {
+       preferences.facetFilters.push(["packType:" + i.text])
+     })
+    preferences.page = preferences.page + 1
+    let categoryItems = await this._vm.$algolia.search("",preferences)
+    state.items.curPage = state.items.curPage + 1
+    state.items.items = state.items.items.concat(categoryItems.hits)
+    commit("SET_ITEMS", state.items)
     commit("SET_GLOBAL_LOADER", false)
   },
 
   async loadCategories({commit}) {
     let response = await this._vm.$algolia.search('', {facets: '*', hitsPerPage: 0})
-    let cat = Object.keys(response.facets.category).map((i, index) => {
-      return {text : i}
-    })
-    commit("SET_CATEGORIES", cat)
+    let category = Object.entries(response.facets.category).map(i => {
+      return {text : i[0], count : i[1]}
+    }) 
+
+    commit("SET_CATEGORIES", category)
   },
 
   async loadFilters({commit, state}, router) {
