@@ -1,6 +1,24 @@
 <template>
   <v-row class="justify-center">
-    <v-flex class="" xs12 md8 v-for="(item, index) in orders" :key="index">
+
+    <v-row v-if="orders.length == 0" class="justify-center" >
+      <v-flex xs11 md8>
+        <v-row class="justify-center">
+          <v-img max-width="350" :src="require('../assets/no_orders.svg')"> 
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="black lighten-5"></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-row>
+        <v-row class="justify-center">
+          <strong class="text--disabled">Упс.. пока нет заказов</strong>
+        </v-row>
+      </v-flex>
+    </v-row>
+
+    <v-flex v-else class="" xs11 md8 v-for="(item, index) in orders" :key="index">
       <v-card color="#FEFEFE" class="my-5">
         <v-card-title primary-title>
           Номер заказа: {{item.date}}

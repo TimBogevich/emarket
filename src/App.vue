@@ -15,7 +15,20 @@
       app
       clipped
     >
-      <v-list >
+      <v-list v-if="!user">
+        <v-list-item link to="/account">
+          <v-list-item-content>
+            <v-list-item-title>
+              <v-icon>
+                mdi-account
+              </v-icon>
+              Войти
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list v-if="user">
         <v-list-item link to="/account">
           <v-list-item-content>
             <v-list-item-title>
@@ -34,6 +47,17 @@
                 mdi-truck-fast
               </v-icon>
               Мои заказы
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/liked">
+          <v-list-item-content >
+            <v-list-item-title>
+              <v-icon>
+                mdi-heart
+              </v-icon>
+              Избраное
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -135,7 +159,7 @@ import appBar from "./components/appBar"
         let store = this.$store
         firebase.auth().onAuthStateChanged(async (user) => {
           if (user) {
-            store.dispatch("general/retrieveUser", user.uid)
+            store.dispatch("general/retrieveUser", user)
             store.dispatch("general/retrieveCard", user.uid)
             store.dispatch("general/loadOrders", user.uid)
           } else {

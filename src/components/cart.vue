@@ -64,11 +64,25 @@
           :itemsCategory = "item"
           :ind = "index" />
         </div>
-        <div v-else>
-          <v-row class="justify-center" >
-              <v-img max-width="350" :src="require('../assets/empty_cart.png')" />
-          </v-row>
-        </div>
+
+
+    <v-row v-else class="justify-center" >
+      <v-flex xs11 md8>
+        <v-row class="justify-center">
+          <v-img max-width="350" :src="require('../assets/no_orders.svg')"> 
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="black lighten-5"></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-row>
+        <v-row class="justify-center">
+          <strong class="text--disabled">Упс.. корзина пуста</strong>
+        </v-row>
+      </v-flex>
+    </v-row>
+    
     </v-flex>
   </v-row>
 

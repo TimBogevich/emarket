@@ -115,19 +115,30 @@ const actions = {
       return {text : i[0], count : i[1]}
     }) 
     commit("SET_FILTERS", filters)
+  },
+  filtersSeletedRemove({state}, index) {
+    Vue.delete(state.filtersSelected, index)
 
   },
   async saveUser({commit,state}) {
+    Vue.set(state.user, "edited", true)
     let snapshot = await this._vm.$firebase.firestore().collection('users')
     await snapshot.doc(state.user.uid).set(state.user)
   },
-  async retrieveUser({commit,state}, uid) {
-    let snapshot = await this._vm.$firebase.firestore().collection('users').doc(uid).get()
+  async retrieveUser({commit,state}, currentUser) {
+    let snapshot = await this._vm.$firebase.firestore().collection('users').doc(currentUser.uid).get()
     if(snapshot.exists) {
       state.user = snapshot.data()
     }
     else{
-      state.user = {uid}
+      let [name, lastName]  = currentUser.displayName.split(" ")
+      state.user = {
+        uid : currentUser.uid,
+        email : currentUser.email || "",
+        telephone : currentUser.phoneNumber ||"",
+        name : name || "",
+        lastName : lastName || "",
+      }
     }
   },
   async retrieveCard({commit,state, dispatch}, uid) {
@@ -210,6 +221,7 @@ const actions = {
       let logout = await this._vm.$firebase.auth().signOut()
       commit("SET_USER", null)
       commit("SET_CART", [])
+      commit("SET_ORDERS", [])
     }
   }
 }

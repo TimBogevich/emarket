@@ -10,6 +10,8 @@ import i18n from './i18n'
 import * as ModalDialogs from 'vue-modal-dialogs'
 import algolia from './algoliaConf'
 
+
+
 Vue.config.productionTip = false
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -28,12 +30,14 @@ import areYouSure from './components/areYouSure'
 const dialogAreYouSure = ModalDialogs.create(areYouSure, 'content')
 
 let  googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+let  facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
 firebase.initializeApp(firebaseConfig)
 const db = firebase.firestore()
 
 Vue.prototype.$db = db
 Vue.prototype.$firebase = firebase
 Vue.prototype.$googleAuthProvider = googleAuthProvider
+Vue.prototype.$facebookAuthProvider = facebookAuthProvider
 Vue.prototype.$areYouSure = dialogAreYouSure
 Vue.prototype.$algolia = algolia
 

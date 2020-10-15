@@ -1,12 +1,43 @@
 <template>
   <div>
-    <v-row class="mt-10 mx-4 justify-center">
-      <v-btn  color="blue" v-show="!user" @click="googleLogin()">
-        <v-icon left>
-          mdi-google
-        </v-icon>
-        Войти через Google
-      </v-btn>
+    <v-row v-show="!user" class="mt-10 mx-4 justify-center">
+      <v-flex xs12 md4>
+        <v-row class="my-3 mx-12">
+          <v-btn block dark color="#e06555"  @click="googleLogin()">
+            <v-icon left>
+              mdi-google
+            </v-icon>
+            Войти через Google
+          </v-btn>
+        </v-row>
+        <v-row class="my-3 mx-12">
+          <v-btn block dark color="#3B5998" @click="facebookLogin()">
+            <v-icon left>
+              mdi-facebook
+            </v-icon>
+            Войти через Facebook
+          </v-btn>
+
+        </v-row>
+      </v-flex>
+      <!-- <v-flex xs12 md4>
+        <v-form>
+          <v-text-field
+            :label="$t('login.email')"
+            name="login"
+            prepend-icon="mdi-account"
+            type="text"
+          ></v-text-field>
+
+          <v-text-field
+            id="password"
+            :label="$t('login.password')"
+            name="password"
+            prepend-icon="mdi-lock"
+            type="password"
+          ></v-text-field>
+        </v-form>
+      </v-flex> -->
 
 
     </v-row>
@@ -106,6 +137,9 @@
       async googleLogin() {
         let response = await firebase.auth().signInWithPopup(this.$googleAuthProvider)
         this.$store.dispatch("general/retrieveUser",firebase.auth().currentUser.uid)
+      },
+      async facebookLogin() {
+        let response = await firebase.auth().signInWithPopup(this.$facebookAuthProvider)
       },
       async test() {
         console.log(firebase.auth().currentUser)

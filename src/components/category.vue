@@ -2,7 +2,15 @@
   <div>
       <v-row class="justify-center mx-0">
       <v-flex xs12 md8>
-        <filters v-if="showFilters" :key="reloadKey" />
+        <v-chip 
+        close
+        @click:close="filtersSeletedRemove(index)"  
+        class="mr-3" 
+        v-for="(item, index) in filtersSelected" :key="index">
+          {{$t(`filter.${item.text}`)}}
+        </v-chip>
+      </v-flex>
+      <v-flex xs12 md8>
         <item 
         mode = "category"
         v-for="(item, index) in itemsCategory" :key="index" 
@@ -13,18 +21,35 @@
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
 
 
+    <v-menu
+      absolute
+      :close-on-content-click="false"
+      offset-y
+      style="max-width: 600px"
+    >
+      <template v-slot:activator="{ on, attrs }">
 
-      <v-btn
-        class="float_filter"
-        color="primary"
-        fab
-        @click="showFilters = !showFilters"
-        large
-        dark
-        bottom
-      >
-        <v-icon>mdi-filter</v-icon>
-      </v-btn>
+
+        <v-btn
+          class="float_filter"
+          color="primary"
+          fab
+          v-bind="attrs"
+          v-on="on"
+          large
+          dark
+          bottom
+        >
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </template>
+
+      <v-card class="pa-3" id="filter" height="500" width="300">
+        <filters :key="reloadKey" />
+      </v-card>
+    </v-menu>
+
+
 
   </div>
 </template>
@@ -39,13 +64,13 @@ export default {
   components : {item, MugenScroll, filters},
   data() {
     return {
-      showFilters : false,
       page: 1,
       reloadKey : -1,
     }
   },
   computed: {
     items: get("general/items"),
+    filtersSelected: get("general/filtersSelected"),
     itemsCategory() {
       return this.items.items ? this.items.items : []
     },
@@ -72,6 +97,9 @@ export default {
       debugger
       return a.text == b.text;
     },
+    filtersSeletedRemove(index) {
+      this.$store.dispatch("general/filtersSeletedRemove", index)
+    }
   },
 
   mounted() {
@@ -91,6 +119,11 @@ export default {
   .float_filter {
     position: fixed; 
     bottom: 10px;
+  }
+
+  #filter {
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
 </style>

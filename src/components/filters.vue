@@ -1,20 +1,18 @@
 <template>
   <div>
-    <v-card id="filter" height="150" class="pa-5">
-        
-        <v-checkbox 
-          v-for="(item, index) in filters" :key="index"
-          v-model="filtersSelected"
-          :value="item" 
-          :value-comparator="comparator"
-          color="red"
-          hide-details
-        >
-          <template v-slot:label>
-            {{item.text}} ({{item.count}})
-          </template>
-        </v-checkbox>
-    </v-card>
+    <h5>Тип упаковки</h5>
+    <v-checkbox 
+      v-for="(item, index) in filters" :key="index"
+      v-model="filtersSelected"
+      :value="item" 
+      :value-comparator="comparator"
+      color="red"
+      hide-details
+    >
+      <template v-slot:label>
+        {{$t(`filter.${item.text}`)}} ({{item.count}})
+      </template>
+    </v-checkbox>
   </div>
 </template>
 
@@ -52,7 +50,4 @@
 </script>
 
 <style lang="scss" scoped>
-  #filter {
-    overflow: auto;
-  }
 </style>
