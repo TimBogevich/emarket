@@ -1,22 +1,14 @@
 <template>
   <v-app id="inspire">
     <appBar />
-    <v-progress-linear
-      v-if="globalLoader"
-      indeterminate
-      absolute
-      color="white"
-      height="10"
-    ></v-progress-linear>
 
     <v-navigation-drawer
-      disable-resize-watcher
       v-model="drawer"
       app
       clipped
     >
       <v-list v-if="!user">
-        <v-list-item link to="/account">
+        <v-list-item link @click="loginDialog()">
           <v-list-item-content>
             <v-list-item-title>
               <v-icon>
@@ -29,13 +21,25 @@
       </v-list>
 
       <v-list v-if="user">
-        <v-list-item link to="/account">
+
+      <v-list-group
+        :value="true"
+        prepend-icon="mdi-account-circle"
+        no-action
+      >
+        <template v-slot:activator>
           <v-list-item-content>
+            <v-list-item-title>Аккаунт</v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item link to="/account">
+          <v-list-item-content >
             <v-list-item-title>
               <v-icon>
                 mdi-account
               </v-icon>
-              Аккаунт
+              Мои данные
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -61,6 +65,8 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+      </v-list-group>
+
       </v-list>
 
         <v-divider></v-divider>
@@ -105,8 +111,14 @@
 
     </v-navigation-drawer>
 
-
     <v-main>
+      <v-progress-linear
+      v-if="globalLoader"
+      indeterminate
+      absolute
+      color="red"
+      height="6"
+      ></v-progress-linear>
       <v-container
         :class="$route.path === '/' ? 'ma-0 pa-0' : null"
         fluid
@@ -116,6 +128,7 @@
     </v-main>
 
     <dialogs-wrapper></dialogs-wrapper>
+
 
   </v-app>
 </template>
@@ -162,11 +175,16 @@ import appBar from "./components/appBar"
             store.dispatch("general/retrieveUser", user)
             store.dispatch("general/retrieveCard", user.uid)
             store.dispatch("general/loadOrders", user.uid)
+            store.dispatch("general/loadLiked", user.uid)
           } else {
             let logout = await firebase.auth().signOut()
             this.user = null
           }
         });
+      },
+      async loginDialog() {
+        console.log("test")
+        let response = await this.$dialogLogin("Необходимо авторизоваться")
       }
     },
     mounted() {

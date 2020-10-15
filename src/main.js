@@ -27,7 +27,9 @@ const firebaseConfig = {
 };
 
 import areYouSure from './components/areYouSure'
+import login from './components/login'
 const dialogAreYouSure = ModalDialogs.create(areYouSure, 'content')
+const dialogLogin = ModalDialogs.create(login, 'content')
 
 let  googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 let  facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
@@ -39,6 +41,7 @@ Vue.prototype.$firebase = firebase
 Vue.prototype.$googleAuthProvider = googleAuthProvider
 Vue.prototype.$facebookAuthProvider = facebookAuthProvider
 Vue.prototype.$areYouSure = dialogAreYouSure
+Vue.prototype.$dialogLogin = dialogLogin
 Vue.prototype.$algolia = algolia
 
 

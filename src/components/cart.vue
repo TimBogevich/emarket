@@ -69,7 +69,7 @@
     <v-row v-else class="justify-center" >
       <v-flex xs11 md8>
         <v-row class="justify-center">
-          <v-img max-width="350" :src="require('../assets/no_orders.svg')"> 
+          <v-img width="150" max-width="350" :src="require('../assets/no_orders.svg')"> 
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular indeterminate color="black lighten-5"></v-progress-circular>

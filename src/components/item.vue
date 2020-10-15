@@ -35,20 +35,25 @@
             ></v-select>
           </v-flex>
           <v-flex>
-            <v-btn small class="ma-0 pa-0" v-if="mode==='category'" @click="toCart(itemsCategory)" block color="success">В корзину</v-btn>
-            <v-btn small class="ma-0 pa-0" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" block text>Удалить</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
+            <v-btn small icon @click="likeItem(itemsCategory)">
+              <v-icon>
+                mdi-heart
+              </v-icon>
+            </v-btn>
           </v-flex>
 
         </v-row>
 
       </v-row>
 
-
+      <!-- Desktop -->
       <v-row v-else class="align-top my-2 mx-10">
         <v-flex xs2 md1 class="mt-3">
           <v-img max-width="100" :src="itemsCategory.image"></v-img>
         </v-flex>
-        <v-flex xs10 md9>
+        <v-flex xs10 md8>
           <v-card-title primary-title>
             {{itemsCategory.productName}}
           </v-card-title>
@@ -58,23 +63,29 @@
             <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">Ссылка на medpex</a>
           </v-card-text>
         </v-flex>
-        <v-flex xs12 md2 >
+        <v-flex xs12 md3 >
           <v-row class="mb-2 align-center justify-end">
             <h3>
               {{itemsCategory.productPrice}} €
             </h3>
           </v-row>
           <v-row class="mb-2 align-center justify-end">
-            <v-flex xs3 mr-2>
+            <v-flex xs3 >
               <v-select
+              class="ma-2"
                 :items="selectCount"
                 v-on:input="itemsCategory.selectCountSelected = $event"
                 :value="itemsCategory.selectCountSelected || 1"
               ></v-select>
             </v-flex>
-            <v-flex xs8>
-              <v-btn small v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
+            <v-flex flex-direction: row xs9>
+              <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
               <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
+              <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small class="ma-2" icon @click="likeItem(itemsCategory)">
+                <v-icon>
+                  mdi-heart
+                </v-icon>
+              </v-btn>
             </v-flex>
           </v-row>
         </v-flex>
@@ -115,12 +126,19 @@ export default {
     cart: sync("general/cart"),
     isMobile() {
       return ["xs", "sm"].includes(this.$vuetify.breakpoint.name)
-    }
+    },
+    likedItems: get("general/likedItems")
   },
   methods: {
     toCart(item) {
       let obj = Object.assign({}, item)
       this.$store.dispatch("general/toCart", obj)
+    },
+    likeItem(item) {
+      this.$store.dispatch("general/likeItem", item)
+    },
+    isLiked(pzn) {
+      return this.likedItems.find(i => i.pzn == pzn)
     },
     async deleteFromCart(index, item) {
       this.$store.dispatch("general/deleteFromCart", {index, item})

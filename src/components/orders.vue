@@ -4,7 +4,7 @@
     <v-row v-if="orders.length == 0" class="justify-center" >
       <v-flex xs11 md8>
         <v-row class="justify-center">
-          <v-img max-width="350" :src="require('../assets/no_orders.svg')"> 
+          <v-img width="150"  max-width="350" :src="require('../assets/no_orders.svg')"> 
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular indeterminate color="black lighten-5"></v-progress-circular>
@@ -33,8 +33,8 @@
           Отправлено по адресу:
         </v-card-text>
 
-        <v-flex class="px-5 pb-2">
-          <v-stepper dense v-model="item.status" alt-labels>
+        <v-flex class="mx-5 my-2">
+          <v-stepper dense v-model="item.status">
             <v-stepper-header>
               <v-stepper-step :complete="item.status >= 1" step="1">
                 Заказ размещен

@@ -3,13 +3,12 @@
     <v-row>
       <swiper ref="test" class="swiper" :options="headSwiperOption">
         <swiper-slide v-for="(item, index) in carouselItems" :key="index">
-            <v-img :src="item.src"></v-img>
+            <v-img max-height="400" :src="item.src"></v-img>
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </v-row>
 
-    <v-row class="mt-5 justify-center">
+    <v-row class="ma-5 justify-center">
       <v-flex xs4 md2>
         <span color="red">
           Самые популярные
@@ -18,11 +17,12 @@
     </v-row>
 
     <v-row class="justify-center">
-      <v-flex xs12 md9>
+      <v-flex xs11 md9>
         <swiper class="swiper" :options="swiperOption">
           <swiper-slide
            v-for="item in 8" :key="item">
             <v-sheet
+              @click="goToItem()"
               color="white"
               width="150"
             >
@@ -108,7 +108,7 @@
         slidesPerView: 1,
         centeredSlides: true,
         autoplay: {
-          delay: 2500,
+          delay: 3500,
           disableOnInteraction: false
         },
         pagination: {
@@ -123,13 +123,17 @@
     }),
     mounted() {
     },
+    methods: {
+      goToItem() {
+        console.log("test")
+      }
+    },
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .swiper {
-    height: 400px;
     width: 100%;
 
     .swiper-slide {

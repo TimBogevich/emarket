@@ -6,6 +6,7 @@ import router from '@/router'
 
 const  state =  {
   items : [],
+  likedItems : [],
   orders : [],
   drawer : null,
   categories : [],
@@ -214,6 +215,25 @@ const actions = {
     await Promise.all(result)
     commit("SET_ORDERS", orders)
 
+  },
+
+  async loadLiked({commit}, uid) {
+    let likedRef = this._vm.$db.collection('users').doc(uid).collection('liked')
+    let liked = await likedRef.get()
+    liked = liked.docs.map(i => i.data())
+    commit("SET_LIKED_ITEMS", liked)
+  },
+  async likeItem({state}, item) {
+    let likedRef = this._vm.$db.collection('users').doc(state.user.uid).collection('liked')
+    let doc = await likedRef.doc(item.pzn).get()
+    if(doc.exists) {
+      await likedRef.doc(item.pzn).delete()
+      let index = state.likedItems.findIndex(i => i.pzn == item.pzn)
+      Vue.delete(state.likedItems, index)
+    } else {
+      let liked = await likedRef.doc(item.pzn).set(item)
+      Vue.set(state.likedItems, state.likedItems.length, item)
+    }
   },
   async logOut({commit,state}) {
     let response = await this._vm.$areYouSure("Выйти?")

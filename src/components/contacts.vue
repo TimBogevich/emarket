@@ -14,7 +14,6 @@
         :hide-close-button="hideCloseButton"
         :close-button-icon-size="closeButtonIconSize"
         :submit-icon-size="submitIconSize"
-        :submit-image-icon-size="submitImageIconSize"
         :load-more-messages="toLoad.length > 0 ? loadMoreMessages : null"
         :async-mode="asyncMode"
         :scroll-bottom="scrollBottom"

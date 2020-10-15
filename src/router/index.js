@@ -53,6 +53,11 @@ const routes = [
     name: 'contacts',
     component: () => import(/* webpackChunkName: "orders" */ '../views/contacts.vue')
   },
+  {
+    path: '/liked',
+    name: 'liked',
+    component: () => import(/* webpackChunkName: "orders" */ '../views/liked.vue')
+  },
 ]
 
 const router = new VueRouter({
