@@ -14,7 +14,7 @@
     "core-js": "^3.6.5",
     "firebase": "^7.22.1",
     "pathify": "0.0.1",
-    "swiper": "^6.3.3",
+    "swiper": "^5.3.6",
     "v-credit-card": "^1.2.4",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",

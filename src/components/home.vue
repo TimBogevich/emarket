@@ -1,25 +1,15 @@
 <template>
   <div>
     <v-row>
-
-      <v-carousel 
-      show-arrows-on-hover
-      height = "300"
-      hide-delimiter-background
-
-      cycle>
-        <v-carousel-item
-          v-for="(item,i) in carouselItems"
-          :key="i"
-          :src="item.src"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
-        >
-        </v-carousel-item>
-      </v-carousel>
+      <swiper ref="test" class="swiper" :options="headSwiperOption">
+        <swiper-slide v-for="(item, index) in carouselItems" :key="index">
+            <v-img :src="item.src"></v-img>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
     </v-row>
 
-    <v-row class="ma-5 justify-center">
+    <v-row class="mt-5 justify-center">
       <v-flex xs4 md2>
         <span color="red">
           Самые популярные
@@ -27,11 +17,11 @@
       </v-flex>
     </v-row>
 
-    <v-row class="my-4 justify-center">
+    <v-row class="justify-center">
       <v-flex xs12 md9>
         <swiper class="swiper" :options="swiperOption">
           <swiper-slide
-           v-for="item in 12" :key="item">
+           v-for="item in 8" :key="item">
             <v-sheet
               color="white"
               width="150"
@@ -45,7 +35,7 @@
                 </v-img>
                 <h4 class="mx-3 text-left">Zirkulin </h4>
                 <v-rating
-                  value="4"
+                  :value="4"
                   background-color="purple lighten-3"
                   color="purple"
                   readonly
@@ -68,8 +58,8 @@
 
 
 <script>
-  import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import 'swiper/swiper-bundle.css'
+  import { Swiper, SwiperSlide, Autoplay, Pagination  } from 'vue-awesome-swiper'
+  import 'swiper/css/swiper.css'
 
   export default {
     components: {
@@ -80,6 +70,7 @@
       model: 0,
       carouselItems : [
         {src : "https://firebasestorage.googleapis.com/v0/b/apotheke-171c2.appspot.com/o/banners%2Ffemibion.jpg?alt=media"},
+        {src : "https://firebasestorage.googleapis.com/v0/b/apotheke-171c2.appspot.com/o/banners%2Fpr_f5p3b-femibion.jpg?alt=media"},
         {src : "https://firebasestorage.googleapis.com/v0/b/apotheke-171c2.appspot.com/o/banners%2Fpr_f5p3b-femibion.jpg?alt=media"},
       ],
       swiperOption: {
@@ -111,11 +102,43 @@
           }
         }
       },
+      headSwiperOption: {
+        spaceBetween: 1,
+        loop: true,
+        slidesPerView: 1,
+        centeredSlides: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      }
     }),
+    mounted() {
+    },
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  .swiper {
+    height: 400px;
+    width: 100%;
 
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      background-color: white;
+    }
+  }
 </style>
