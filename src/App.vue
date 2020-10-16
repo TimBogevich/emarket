@@ -51,6 +51,14 @@
                 mdi-truck-fast
               </v-icon>
               Мои заказы
+              <v-avatar
+              color="grey"
+              size="20"
+              >
+              <span class="white--text headline text-caption">
+                {{orders.length}}
+              </span>
+              </v-avatar>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -62,9 +70,18 @@
                 mdi-heart
               </v-icon>
               Избраное
+              <v-avatar
+              color="grey"
+              size="20"
+              >
+              <span class="white--text headline text-caption">
+                {{likedItems.length}}
+              </span>
+              </v-avatar>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
       </v-list-group>
 
       </v-list>
@@ -163,6 +180,8 @@ import appBar from "./components/appBar"
       user: sync("general/user"),
       drawer: sync("general/drawer"),
       filtersSelected: sync("general/filtersSelected"),
+      likedItems: get("general/likedItems"),
+      orders: get("general/orders"),
     },
     methods: {
       logOut() {
@@ -188,7 +207,7 @@ import appBar from "./components/appBar"
       }
     },
     mounted() {
-      this.$store.dispatch("general/loadCategories")
+      //this.$store.dispatch("general/loadCategories")
       this.login()
     },
   }

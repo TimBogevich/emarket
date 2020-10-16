@@ -4,6 +4,16 @@
         <div v-if="cartLength">
           <div v-if="showCard">
             <v-credit-card :direction="cardDirection" @change="creditInfoChanged" :trans="translations"/>
+            <v-row class="justify-center">
+              <v-flex md8 class="justify-center mb-5">
+                <p style="word-wrap: break-word;" class="text-center">
+                  Заказ будет отправлен по адресу: {{$t("countries." + user.country)}}, город {{user.city}}, Адрес: {{user.address}}, На имя: {{user.name}} {{user.lastName}}
+
+                </p>
+
+              </v-flex>
+
+            </v-row>
           </div>
           <v-row v-if="!showCard" class="justify-center mb-5">
             <v-btn @click="toBuy()" color="success">

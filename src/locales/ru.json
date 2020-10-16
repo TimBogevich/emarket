@@ -5,6 +5,10 @@
     "diet": "Диета",
     "flu": "Грипп и простуда"
   },
+  "countries" : {
+    "russia" : "Россия",
+    "ukraine" : "Украина"
+  },
   "filter": {
     "ampullen": "ампулы",
     "augencreme": "крем для глаз",

@@ -20,7 +20,7 @@
 
     <v-flex v-else class="" xs11 md8 v-for="(item, index) in orders" :key="index">
       <v-card color="#FEFEFE" class="my-5">
-        <v-card-title primary-title>
+        <v-card-title primary-title>          
           Номер заказа: {{item.date}}
           <v-spacer></v-spacer>
           Стоимость: {{item.price.toFixed(2)}} €
@@ -30,7 +30,7 @@
         </v-card-subtitle>
          
         <v-card-text>
-          Отправлено по адресу:
+          Отправлено по адресу: {{item.city}}, {{item.address}}, {{item.zip}}
         </v-card-text>
 
         <v-flex class="mx-5 my-2">
@@ -86,8 +86,12 @@
 
 <script>
   import {get, sync} from 'vuex-pathify'
+  import VueResponsiveText from 'vue-responsive-text'
 
   export default {
+    components: {
+      VueResponsiveText
+    },
     computed: {
       orders : get("general/orders")
     },

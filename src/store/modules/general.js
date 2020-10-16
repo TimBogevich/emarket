@@ -7,6 +7,7 @@ import router from '@/router'
 const  state =  {
   items : [],
   likedItems : [],
+  popular : [],
   orders : [],
   drawer : null,
   categories : [],
@@ -181,7 +182,7 @@ const actions = {
   async makeOrder({commit,state, dispatch, getters}) {
     let order = this._vm.$db.collection('users').doc(state.user.uid).collection('orders')
     let newDoc = order.doc()
-    let doc = await newDoc.set({date : Date.now() , status : 1, price : getters.cartTotalPrice})
+    let doc = await newDoc.set({date : Date.now() , status : 1, price : getters.cartTotalPrice, address : state.user.address, city: state.user.city, telephone : state.user.telephone, zip : state.user.zip, name : state.user.name, lastName : state.user.lastName})
     let items = order.doc(newDoc.id).collection('items')
     state.cart.forEach(i => items.doc().set(i))
     commit("SET_CART", [])
@@ -223,6 +224,14 @@ const actions = {
     liked = liked.docs.map(i => i.data())
     commit("SET_LIKED_ITEMS", liked)
   },
+
+  async loadPopular({commit}) {
+    let popularRef = this._vm.$db.collection('popular')
+    let popular = await popularRef.get()
+    popular = popular.docs.map(i => i.data())
+    commit("SET_POPULAR", popular)
+  },
+
   async likeItem({state}, item) {
     let likedRef = this._vm.$db.collection('users').doc(state.user.uid).collection('liked')
     let doc = await likedRef.doc(item.pzn).get()

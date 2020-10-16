@@ -6,27 +6,27 @@
     >
       <v-row class="mx-4" v-if="isMobile">
         <v-row>
-          <p>
+          <v-card-title class="subtitle-1 font-weight-bold">
             {{itemsCategory.productName}}
-          </p>
+          </v-card-title>
         </v-row>
         <v-row>
           <v-flex class="ml-3" xs2>
             <v-img max-width="100" :src="itemsCategory.image"></v-img>
-            <h6>
-              {{itemsCategory.productPrice}} €
-            </h6>
+
+          <VueResponsiveText class="text-right mt-2 px-2 font-weight-bold">
+            {{itemsCategory.productPrice}} €
+          </VueResponsiveText>
           </v-flex>
           <v-flex xs9>
-            <v-card-text class="ml-1 mr-1 mt-0 pt-0">
+            <v-card-text class="ml-2 mr-0 pr-0 mt-0 pt-0 caption">
               {{itemsCategory.desc}}
               <br v-if="mode==='category'">
-              <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">Ссылка на medpex</a>
             </v-card-text>
           </v-flex>
         </v-row>
-        <v-row class="align-start mx-3">
-          <v-flex xs3>
+        <v-row class="align-start">
+          <v-flex class="ml-3" xs3>
             <v-select
             class="mx-3 pa-0 my-0"
               :items="selectCount"
@@ -34,15 +34,21 @@
               :value="itemsCategory.selectCountSelected || 1"
             ></v-select>
           </v-flex>
-          <v-flex>
-            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
-            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
-            <v-btn small icon @click="likeItem(itemsCategory)">
+
+          <v-flex xs1>
+            <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small icon @click="likeItem(itemsCategory)">
               <v-icon>
                 mdi-heart
               </v-icon>
             </v-btn>
           </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex xs6>
+            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
+          </v-flex>
+
+
 
         </v-row>
 
@@ -64,13 +70,21 @@
           </v-card-text>
         </v-flex>
         <v-flex xs12 md3 >
-          <v-row class="mb-2 align-center justify-end">
-            <h3>
-              {{itemsCategory.productPrice}} €
-            </h3>
+          <v-row class="justify-end">
+            <v-card-title primary-title class="font-weight-bold">
+                {{itemsCategory.productPrice}} €
+            </v-card-title>
           </v-row>
-          <v-row class="mb-2 align-center justify-end">
-            <v-flex xs3 >
+          <v-row class="justify-end align-center">
+            <v-flex xs1 class="mx-2">
+              <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small class="ma-2" icon @click="likeItem(itemsCategory)">
+                <v-icon>
+                  mdi-heart
+                </v-icon>
+              </v-btn>
+            </v-flex>
+
+            <v-flex xs3 class="mx-3">
               <v-select
               class="ma-2"
                 :items="selectCount"
@@ -78,15 +92,13 @@
                 :value="itemsCategory.selectCountSelected || 1"
               ></v-select>
             </v-flex>
-            <v-flex flex-direction: row xs9>
+
+
+            <v-flex flex-direction: row xs5 class="justify-end">
               <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
-              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
-              <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small class="ma-2" icon @click="likeItem(itemsCategory)">
-                <v-icon>
-                  mdi-heart
-                </v-icon>
-              </v-btn>
+              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" color="accent">Удалить</v-btn>
             </v-flex>
+
           </v-row>
         </v-flex>
       </v-row>
@@ -97,7 +109,12 @@
 
 <script>
 import {get,sync} from 'vuex-pathify'
+import VueResponsiveText from 'vue-responsive-text'
+
 export default {
+  components: {
+    VueResponsiveText
+  },
   props : ["itemsCategory", "mode", "ind"],
   data() {
     return {
