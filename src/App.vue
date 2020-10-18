@@ -7,7 +7,7 @@
       app
       clipped
     >
-      <v-list v-if="!user">
+      <v-list dense v-if="!user">
         <v-list-item link @click="loginDialog()">
           <v-list-item-content>
             <v-list-item-title>
@@ -23,17 +23,18 @@
       <v-list v-if="user">
 
       <v-list-group
-        :value="true"
+        dense
+        :value="false"
         prepend-icon="mdi-account-circle"
         no-action
       >
         <template v-slot:activator>
-          <v-list-item-content>
+          <v-list-item-content dense>
             <v-list-item-title>Аккаунт</v-list-item-title>
           </v-list-item-content>
         </template>
 
-        <v-list-item link to="/account">
+        <v-list-item dense link to="/account">
           <v-list-item-content >
             <v-list-item-title>
               <v-icon>
@@ -44,7 +45,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/orders">
+        <v-list-item dense link to="/orders">
           <v-list-item-content >
             <v-list-item-title>
               <v-icon>
@@ -63,7 +64,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/liked">
+        <v-list-item dense link to="/liked">
           <v-list-item-content >
             <v-list-item-title>
               <v-icon>
@@ -87,7 +88,7 @@
       </v-list>
 
         <v-divider></v-divider>
-      <v-list >
+      <v-list>
 
         <v-list-item
           v-for="(cat, index) in categories"
@@ -107,7 +108,8 @@
       <v-divider></v-divider>
 
       <template v-slot:append >
-        <v-list>
+        <v-list
+         dense>
           <v-list-item link v-for="item in bookmarks" :key="item.name" :to="item.url">
             <v-list-item-content >
               <v-list-item-title>{{item.name}}</v-list-item-title>
@@ -130,7 +132,7 @@
 
     <v-main>
       <v-progress-linear
-      v-if="globalLoader"
+      :active="loaderIsVisible()"
       indeterminate
       absolute
       color="red"
@@ -176,12 +178,14 @@ import appBar from "./components/appBar"
     }),
     computed: {
       categories : get("general/categories"),
-      globalLoader : get("general/globalLoader"),
       user: sync("general/user"),
       drawer: sync("general/drawer"),
       filtersSelected: sync("general/filtersSelected"),
       likedItems: get("general/likedItems"),
       orders: get("general/orders"),
+      loaderIsVisible() {
+        return this.$store.getters["vuexActionTracker/hasRunningActions"]
+      },
     },
     methods: {
       logOut() {
@@ -202,7 +206,6 @@ import appBar from "./components/appBar"
         });
       },
       async loginDialog() {
-        console.log("test")
         let response = await this.$dialogLogin("Необходимо авторизоваться")
       }
     },

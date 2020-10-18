@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 80",
+    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
@@ -13,6 +13,7 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "firebase": "^7.22.1",
+    "jsdom": "^16.4.0",
     "pathify": "0.0.1",
     "swiper": "^5.3.6",
     "v-credit-card": "^1.2.4",
@@ -22,10 +23,14 @@
     "vue-modal-dialogs": "^3.0.0",
     "vue-moment": "^4.1.0",
     "vue-mugen-scroll": "^0.2.6",
+    "vue-product-zoomer": "^3.0.1",
+    "vue-product-zoomer2": "^1.0.1",
     "vue-quick-chat": "^1.2.6",
+    "vue-responsive-text": "^0.1.4",
     "vue-router": "^3.2.0",
     "vuetify": "^2.3.12",
     "vuex": "^3.4.0",
+    "vuex-action-tracker": "0.0.5",
     "vuex-easy-firestore": "^1.35.15",
     "vuex-pathify": "^1.4.1",
     "vuex-persistedstate": "^3.1.0"

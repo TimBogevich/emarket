@@ -38,6 +38,14 @@
                 label="Телефон"
                 id="telephone"
               ></v-text-field>
+
+              <v-text-field
+                name="email"
+                type="text"
+                v-model="user.email"
+                label="email"
+                id="email"
+              ></v-text-field>
           </v-flex>
           <v-flex xs12 md6 ma-5>
             <v-text-field

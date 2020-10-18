@@ -9,7 +9,8 @@ import '@mdi/font/css/materialdesignicons.css'
 import i18n from './i18n'
 import * as ModalDialogs from 'vue-modal-dialogs'
 import algolia from './algoliaConf'
-
+import VuexActionTracker from "vuex-action-tracker";
+import ProductZoomer from 'vue-product-zoomer2'
 
 
 Vue.config.productionTip = false
@@ -45,6 +46,7 @@ Vue.prototype.$dialogLogin = dialogLogin
 Vue.prototype.$algolia = algolia
 
 
+Vue.use(ProductZoomer)
 Vue.use(ModalDialogs) 
 Vue.use(Vuetify)
 Vue.use(require('vue-moment'));
@@ -53,6 +55,8 @@ const vuetifyOptions = {
     iconfont: 'mdi'
   },
 }
+Vue.use(new VuexActionTracker(), store);
+
 
 new Vue({
   router,

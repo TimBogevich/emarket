@@ -7,8 +7,6 @@
             gradient="to right, rgba(255, 255, 255,.33), rgba(25,32,72,1)"
             max-height="400" :src="item.src"></v-img>
             <div class="subtitle">Немецкая аптека</div>
-            <div class="subtext1">Напрямую из Германии</div>
-            <div class="subtext2">Лекарства без подделок</div>
             <img class="apotheke_logo" src="https://firebasestorage.googleapis.com/v0/b/apotheke-171c2.appspot.com/o/style%2F2000px-Deutsche_Apotheke_Logo.svg.png?alt=media">
         </swiper-slide>
       </swiper>
@@ -26,9 +24,10 @@
       <v-flex xs10 md9>
         <swiper class="swiper" :options="swiperOption">
           <swiper-slide
-           v-for="item in popular" :key="item">
+           v-for="(item, index) in popular" :key="index">
             <v-sheet
-              @click="goToItem()"
+              width="120"
+              
               color="white"
             >
                 <v-img max-width="130" :src="item.image">
@@ -38,9 +37,11 @@
                     </v-row>
                   </template>
                 </v-img>
-                <h4 class="mx-3 text-left">
-                  {{item.productName}}  
-                </h4>
+                <router-link :to="`/details/${item.pzn}`">
+                  <h4 class="mx-3 text-left">
+                    {{item.productName}}  
+                  </h4>
+                </router-link>
                 <v-rating
                   :value="4"
                   background-color="purple lighten-3"

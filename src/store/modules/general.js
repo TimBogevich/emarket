@@ -12,7 +12,6 @@ const  state =  {
   drawer : null,
   categories : [],
   categoryPage : 1,
-  globalLoader : false,
   filters : [],
   filtersSelected : [],
   cursors : [],
@@ -61,7 +60,6 @@ const getters = {
 
 const actions = {
   async loadItem({commit,state}, router) {
-    commit("SET_GLOBAL_LOADER", true)
     let preferences = {
       hitsPerPage: 10,
       attributesToSnippet: "*:20",
@@ -72,11 +70,9 @@ const actions = {
     preferences.facetFilters.push(state.filtersSelected.map(i => "packType:" + i.text))
     let categoryItems = await this._vm.$algolia.search("",preferences)
     commit("SET_ITEMS", {category : router.category, curPage : 0, nbPages : categoryItems.nbPages, items : categoryItems.hits})
-    commit("SET_GLOBAL_LOADER", false)
   },
 
   async loadMore({commit, state}, router) {
-    commit("SET_GLOBAL_LOADER", true)
     let preferences = {
       hitsPerPage: 10,
       attributesToSnippet: "*:20",
@@ -92,7 +88,6 @@ const actions = {
     state.items.curPage = state.items.curPage + 1
     state.items.items = state.items.items.concat(categoryItems.hits)
     commit("SET_ITEMS", state.items)
-    commit("SET_GLOBAL_LOADER", false)
   },
 
   async loadCategories({commit}) {
@@ -133,7 +128,7 @@ const actions = {
       state.user = snapshot.data()
     }
     else{
-      let [name, lastName]  = currentUser.displayName.split(" ")
+      let [name, lastName]  = (currentUser.displayName || "").split(" ")
       state.user = {
         uid : currentUser.uid,
         email : currentUser.email || "",
@@ -180,14 +175,15 @@ const actions = {
     }
   },
   async makeOrder({commit,state, dispatch, getters}) {
+
     let order = this._vm.$db.collection('users').doc(state.user.uid).collection('orders')
     let newDoc = order.doc()
     let doc = await newDoc.set({date : Date.now() , status : 1, price : getters.cartTotalPrice, address : state.user.address, city: state.user.city, telephone : state.user.telephone, zip : state.user.zip, name : state.user.name, lastName : state.user.lastName})
     let items = order.doc(newDoc.id).collection('items')
     state.cart.forEach(i => items.doc().set(i))
-    commit("SET_CART", [])
-
     await this._vm.$db.collection('orders').doc().set({id : newDoc.id, path : newDoc.path, date : Date.now(), price : getters.cartTotalPrice})
+    
+    commit("SET_CART", [])
 
     let cart = await this._vm.$db.collection('users').doc(state.user.uid).collection('cart').get()
     const batch = this._vm.$db.batch();
@@ -195,7 +191,7 @@ const actions = {
       batch.delete(doc.ref);
     });
     await batch.commit();
-    await dispatch("loadOrders")
+    await dispatch("loadOrders", state.user.uid)
   },
 
   async loadOrders({commit}, uid) {

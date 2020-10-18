@@ -88,7 +88,7 @@ export default {
                 bottomLeft: "10px",
                 bottomRight: "10px",
             },
-            hideCloseButton: false,
+            hideCloseButton: true,
             submitIconSize: 25,
             closeButtonIconSize: "20px",
             asyncMode: false,

@@ -4,11 +4,15 @@
     color="#FEFEFE" 
     class="my-2"
     >
+
+      <!-- MOBILE -->
       <v-row class="mx-4" v-if="isMobile">
         <v-row>
-          <v-card-title class="subtitle-1 font-weight-bold">
-            {{itemsCategory.productName}}
-          </v-card-title>
+          <router-link class="link" :to="`/details/${itemsCategory.pzn}`">
+            <v-card-title class="subtitle-1 font-weight-bold">
+              {{itemsCategory.productName}}
+            </v-card-title>
+          </router-link>
         </v-row>
         <v-row>
           <v-flex class="ml-3" xs2>
@@ -60,9 +64,11 @@
           <v-img max-width="100" :src="itemsCategory.image"></v-img>
         </v-flex>
         <v-flex xs10 md8>
-          <v-card-title primary-title>
-            {{itemsCategory.productName}}
-          </v-card-title>
+          <router-link class="link" :to="`/details/${itemsCategory.pzn}`">
+            <v-card-title primary-title>
+              {{itemsCategory.productName}}
+            </v-card-title>
+          </router-link>
           <v-card-text >
             {{itemsCategory.desc}}
             <br v-if="mode==='category'">
@@ -167,3 +173,10 @@ export default {
   },
 }
 </script>
+
+<style>
+  .link {
+    text-decoration: none;
+    color: #4d5481 !important;
+  }
+</style>
