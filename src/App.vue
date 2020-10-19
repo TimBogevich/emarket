@@ -146,7 +146,9 @@
       </v-container>
     </v-main>
 
-    <dialogs-wrapper></dialogs-wrapper>
+    <dialogs-wrapper name="areYouSure"></dialogs-wrapper>
+    <dialogs-wrapper name="login"></dialogs-wrapper>
+    <dialogs-wrapper name="cardPayment"></dialogs-wrapper>
 
 
   </v-app>
@@ -161,20 +163,7 @@ import appBar from "./components/appBar"
   export default {
     components : {appBar},
     data: () => ({
-      bookmarks: [
-        {
-          name : "Контакты",
-          url : "/contacts"
-        },
-        {
-          name : "О магазине",
-          url : "/about"
-        },
-        {
-          name : "Доставка",
-          url : "/delivery"
-        },
-      ],
+
     }),
     computed: {
       categories : get("general/categories"),
@@ -186,6 +175,20 @@ import appBar from "./components/appBar"
       loaderIsVisible() {
         return this.$store.getters["vuexActionTracker/hasRunningActions"]
       },
+      bookmarks() {
+        if(this.user) {
+          return [
+            {name : "Контакты", url : "/contacts"},
+            {name : "О магазине", url : "/about"},
+            {name : "Доставка", url : "/delivery"},
+         ]
+        } else {
+          return [
+            {name : "О магазине", url : "/about"},
+            {name : "Доставка", url : "/delivery"},
+         ]
+        }
+      }
     },
     methods: {
       logOut() {
@@ -195,10 +198,11 @@ import appBar from "./components/appBar"
         let store = this.$store
         firebase.auth().onAuthStateChanged(async (user) => {
           if (user) {
-            store.dispatch("general/retrieveUser", user)
+            store.dispatch("general/retrieveUser", user.uid)
             store.dispatch("general/retrieveCard", user.uid)
             store.dispatch("general/loadOrders", user.uid)
             store.dispatch("general/loadLiked", user.uid)
+            store.dispatch("general/loadMessages", user.uid)
           } else {
             let logout = await firebase.auth().signOut()
             this.user = null

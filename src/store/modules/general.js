@@ -17,6 +17,7 @@ const  state =  {
   cursors : [],
   cart : [],
   user : null,
+  messages : [],
   coutries : [
     {text : "Россия", value : "russia", iso : "ru"},
     {text : "Украина", value : "ukrain", iso : "ua"},
@@ -122,20 +123,24 @@ const actions = {
     let snapshot = await this._vm.$firebase.firestore().collection('users')
     await snapshot.doc(state.user.uid).set(state.user)
   },
-  async retrieveUser({commit,state}, currentUser) {
-    let snapshot = await this._vm.$firebase.firestore().collection('users').doc(currentUser.uid).get()
+  async retrieveUser({commit,state, dispatch}, uid) {
+    let currentUser = this._vm.$firebase.auth().currentUser
+    let snapshot = await this._vm.$firebase.firestore().collection('users').doc(uid).get()
     if(snapshot.exists) {
-      state.user = snapshot.data()
+      let user = snapshot.data()
+      commit("SET_USER", user)
     }
     else{
       let [name, lastName]  = (currentUser.displayName || "").split(" ")
-      state.user = {
+      await commit("SET_USER",  {
         uid : currentUser.uid,
+        photoURL : currentUser.photoURL || "",
         email : currentUser.email || "",
         telephone : currentUser.phoneNumber ||"",
         name : name || "",
         lastName : lastName || "",
-      }
+      })
+      dispatch("saveUser")
     }
   },
   async retrieveCard({commit,state, dispatch}, uid) {
@@ -221,6 +226,31 @@ const actions = {
     commit("SET_LIKED_ITEMS", liked)
   },
 
+  async uploadMessage({state}, message) {
+    let messagesRef = this._vm.$db.collection('users').doc(state.user.uid).collection('messages')
+    await messagesRef.doc().set(message)
+
+  },
+
+  async loadMessages({state, commit}, uid) {
+    let messagesRef = await this._vm.$db.collection('users').doc(uid).collection('messages').get()
+    let messages = messagesRef.docs.map(i => i.data())
+    messages = messages.map(i => JSON.parse(i.message))
+    if (messages.length === 0) {
+      messages.push(        {
+        content:
+          "Здравствуйте, если у вас возникли вопросы, пожалуйста пишите нам",
+        myself: false,
+        participantId: 1,
+        timestamp: new Date(),
+        uploaded: true,
+        viewed: true,
+        type: "text",
+      })
+    }
+    commit("SET_MESSAGES", messages)
+  },
+
   async loadPopular({commit}) {
     let popularRef = this._vm.$db.collection('popular')
     let popular = await popularRef.get()
@@ -247,6 +277,7 @@ const actions = {
       commit("SET_USER", null)
       commit("SET_CART", [])
       commit("SET_ORDERS", [])
+      commit("SET_MESSAGES", [])
     }
   }
 }

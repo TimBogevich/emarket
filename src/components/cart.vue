@@ -165,7 +165,10 @@
             return
           }
         } else {
-          this.showCard = true
+          let response = await this.$dialogCardPayment("")
+          if(response) {
+            this.makeOrder()
+          }
         }
       },
       async makeOrder() {

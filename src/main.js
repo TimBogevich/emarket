@@ -11,6 +11,8 @@ import * as ModalDialogs from 'vue-modal-dialogs'
 import algolia from './algoliaConf'
 import VuexActionTracker from "vuex-action-tracker";
 import ProductZoomer from 'vue-product-zoomer2'
+import HeadLoader from "vue-ext-files-head-loader";
+
 
 
 Vue.config.productionTip = false
@@ -29,8 +31,10 @@ const firebaseConfig = {
 
 import areYouSure from './components/areYouSure'
 import login from './components/login'
-const dialogAreYouSure = ModalDialogs.create(areYouSure, 'content')
-const dialogLogin = ModalDialogs.create(login, 'content')
+import cardPayment from './components/cardPayment'
+const dialogAreYouSure = ModalDialogs.create({component: areYouSure,wrapper: 'areYouSure', props : ['content']})
+const dialogLogin = ModalDialogs.create({component: login, wrapper: 'login', props : ['content']})
+const dialogCardPayment = ModalDialogs.create({component: cardPayment, wrapper: 'cardPayment', props : ['content']})
 
 let  googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 let  facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
@@ -43,9 +47,12 @@ Vue.prototype.$googleAuthProvider = googleAuthProvider
 Vue.prototype.$facebookAuthProvider = facebookAuthProvider
 Vue.prototype.$areYouSure = dialogAreYouSure
 Vue.prototype.$dialogLogin = dialogLogin
+Vue.prototype.$dialogCardPayment = dialogCardPayment
 Vue.prototype.$algolia = algolia
 
 
+ 
+Vue.use(HeadLoader);
 Vue.use(ProductZoomer)
 Vue.use(ModalDialogs) 
 Vue.use(Vuetify)

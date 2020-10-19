@@ -58,6 +58,11 @@ const routes = [
     name: 'liked',
     component: () => import(/* webpackChunkName: "orders" */ '../views/liked.vue')
   },
+  {
+    path: '/cardPayment',
+    name: 'cardPayment',
+    component: () => import(/* webpackChunkName: "orders" */ '../views/cardPayment.vue')
+  },
 ]
 
 const router = new VueRouter({

@@ -8,13 +8,13 @@
     >
       <v-row class="align-center">
         <v-app-bar-nav-icon 
-        v-if="!showSearch"
-        @click="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
+        v-if="!showSearch && isMobile"
+        @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-flex v-if="!showSearch" xs2>
           <v-btn to="/" text class="ma-3">
             <v-icon>mdi-plus-thick</v-icon>
             <h3 class="hidden-md-and-down">
-              Немецкая аптека
+              Демо аптека
             </h3>
           </v-btn>
         </v-flex>
@@ -69,6 +69,9 @@
       cartLength : get("general/cartLength"),
       user: sync("general/user"),
       drawer: sync("general/drawer"),
+      isMobile() {
+        return ["xs", "sm", "md"].includes(this.$vuetify.breakpoint.name)
+      },
     },
   }
 </script>

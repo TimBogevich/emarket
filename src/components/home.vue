@@ -6,7 +6,8 @@
             <v-img 
             gradient="to right, rgba(255, 255, 255,.33), rgba(25,32,72,1)"
             max-height="400" :src="item.src"></v-img>
-            <div class="subtitle">Немецкая аптека</div>
+
+              <h1 class="subtitle white--text" >Демо аптека</h1>
             <img class="apotheke_logo" src="https://firebasestorage.googleapis.com/v0/b/apotheke-171c2.appspot.com/o/style%2F2000px-Deutsche_Apotheke_Logo.svg.png?alt=media">
         </swiper-slide>
       </swiper>
@@ -14,9 +15,9 @@
 
     <v-row class="ma-5 justify-center">
       <v-flex xs6 md2>
-        <span color="red">
+        <h4>
           Самые популярные
-        </span>
+        </h4>
       </v-flex>
     </v-row>
 
@@ -147,6 +148,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
   .swiper {
     width: 100%;
 
@@ -162,9 +164,7 @@
     .subtitle {
       position: absolute;
       top: 1vw;
-      right: 5vw;
-      color: white;
-      font-size: 5vw;
+      right: 3vw;
     }
     .subtext1 {
       position: absolute;
