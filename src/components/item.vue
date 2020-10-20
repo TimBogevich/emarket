@@ -81,6 +81,11 @@
                 {{itemsCategory.productPrice}} €
             </v-card-title>
           </v-row>
+          <v-row v-if="itemsCategory.selectCountSelected > 1" class="justify-end mr-3">
+            <span class="caption">
+              {{itemsCategory.productPrice * itemsCategory.selectCountSelected}} €
+            </span>
+          </v-row>
           <v-row class="justify-end align-center">
             <v-flex xs1 class="mx-2">
               <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small class="ma-2" icon @click="likeItem(itemsCategory)">
@@ -91,12 +96,19 @@
             </v-flex>
 
             <v-flex xs3 class="mx-3">
+              <v-text-field
+              v-if="itemsCategory.selectCountSelected > 20"
+              v-on:input="changeAmount($event)"
+              :value="itemsCategory.selectCountSelected"
+              ></v-text-field>
               <v-select
+              v-else
               class="ma-2"
                 :items="selectCount"
-                v-on:input="itemsCategory.selectCountSelected = $event"
+                v-on:input="changeAmount($event)"
                 :value="itemsCategory.selectCountSelected || 1"
               ></v-select>
+
             </v-flex>
 
 
@@ -141,7 +153,7 @@ export default {
         {text : 14, value : 14},
         {text : 15, value : 15},
         {text : 20, value : 20},
-        {text : 25, value : 25},
+        {text : "20+", value : 21},
       ],
     }
   },
@@ -153,6 +165,10 @@ export default {
     likedItems: get("general/likedItems")
   },
   methods: {
+    changeAmount(v) {
+      this.itemsCategory.selectCountSelected = v
+      this.itemsCategory = Object.assign({}, this.itemsCategory)
+    },
     toCart(item) {
       let obj = Object.assign({}, item)
       this.$store.dispatch("general/toCart", obj)

@@ -214,7 +214,7 @@ import appBar from "./components/appBar"
       }
     },
     mounted() {
-      //this.$store.dispatch("general/loadCategories")
+      this.$store.dispatch("general/loadCategories")
       this.login()
     },
   }

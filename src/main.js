@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import firebase from 'firebase'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import '@mdi/font/css/materialdesignicons.css'
@@ -12,22 +11,10 @@ import algolia from './algoliaConf'
 import VuexActionTracker from "vuex-action-tracker";
 import ProductZoomer from 'vue-product-zoomer2'
 import HeadLoader from "vue-ext-files-head-loader";
-
-
-
+import firebase from "./firebaseConf"
 Vue.config.productionTip = false
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDzV37z3vkfXB5dg2uev1hJA3A0jO_wqUY",
-  authDomain: "apotheke-171c2.firebaseapp.com",
-  databaseURL: "https://apotheke-171c2.firebaseio.com",
-  projectId: "apotheke-171c2",
-  storageBucket: "apotheke-171c2.appspot.com",
-  messagingSenderId: "343449187921",
-  appId: "1:343449187921:web:d64c7497aaa3c7fd2f6a70",
-  measurementId: "G-8HC9YTEL6M"
-};
+
 
 import areYouSure from './components/areYouSure'
 import login from './components/login'
@@ -36,15 +23,7 @@ const dialogAreYouSure = ModalDialogs.create({component: areYouSure,wrapper: 'ar
 const dialogLogin = ModalDialogs.create({component: login, wrapper: 'login', props : ['content']})
 const dialogCardPayment = ModalDialogs.create({component: cardPayment, wrapper: 'cardPayment', props : ['content']})
 
-let  googleAuthProvider = new firebase.auth.GoogleAuthProvider()
-let  facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
-firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore()
 
-Vue.prototype.$db = db
-Vue.prototype.$firebase = firebase
-Vue.prototype.$googleAuthProvider = googleAuthProvider
-Vue.prototype.$facebookAuthProvider = facebookAuthProvider
 Vue.prototype.$areYouSure = dialogAreYouSure
 Vue.prototype.$dialogLogin = dialogLogin
 Vue.prototype.$dialogCardPayment = dialogCardPayment

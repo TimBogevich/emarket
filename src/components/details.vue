@@ -22,7 +22,8 @@
               name="amount"
               label="Количество"
               id="amount"
-              value="1"
+              v-model.number="item.selectCountSelected"
+              type="number"
             ></v-text-field>
           </v-flex>
           <v-flex xs1 class="mx-2">
@@ -32,7 +33,7 @@
               </v-icon>
             </v-btn>
           </v-flex>
-          <v-btn color="success">В корзину</v-btn>
+          <v-btn @click="toCart(item)" color="success">В корзину</v-btn>
         </v-row>
       </v-flex>
     </v-row>
@@ -98,6 +99,10 @@
       }
     },
     methods: {
+      toCart(item) {
+        let obj = Object.assign({}, item)
+        this.$store.dispatch("general/toCart", obj)
+      },
       isLiked(pzn) {
         return this.likedItems.find(i => i.pzn == pzn)
       },

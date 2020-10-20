@@ -43,7 +43,7 @@ const getters = {
     let ln
     if (state.cart.length>0) {
       ln = state.cart.reduce((acc, v) => {
-        return acc += (v.selectCountSelected || 1)
+        return acc += parseInt(v.selectCountSelected || 1)
       },0)
     }
     return ln || 0

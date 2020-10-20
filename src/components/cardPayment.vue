@@ -5,15 +5,24 @@
       persistent
       overlay-opacity
     >
-      <v-card>
+      <v-card class="pa-10">
         <div id="checkout-container"></div>
-        <p>Тестовая форма</p>
-        <p>Номера карты:</p>
-        <p>4444555566661111 Успех</p>
-        <p>4444111166665555 Отклонена</p>
-        <v-card-actions>
+        <v-row class="justify-center">
+            <span>Тестовая форма</span>
+        </v-row>
+        <v-row class="justify-center">
+          <span>Номера карты:</span>
+        </v-row>
+        <v-row class="justify-center">
+          <span>4444555566661111 Успех</span>
+        </v-row>
+        <v-row class="justify-center">
+          <span>4444111166665555 Отклонена</span>
+        </v-row>
+        <v-row class="justify-center">
           <v-btn @click="$close(false)" color="red" dark>Отмена</v-btn>
-        </v-card-actions>
+        </v-row>
+
       </v-card>
 
     </v-dialog>
@@ -28,13 +37,12 @@ var Options = {
     methods: ["card"],
     cardIcons: ["mastercard", "visa", "diners-club", "american-express"],
     fields: false,
-    title: "my_title",
-    fullScreen: true,
+    title: "Заказ номер 234234234",
+    fullScreen: false,
     button: true,
-    locales: ["en"],
     email: false,
     tooltip: true,
-    fee: true
+    fee: false
   },
   params: {
     merchant_id: 1397120,
@@ -51,12 +59,6 @@ var Options = {
       my_order_desc: "Тестовый платеж",
       pay: "Оплатить"
     },
-    ru: {
-      card_number: "Card number",
-      my_title: "Order description",
-      my_order_desc: "Test order",
-      pay: "Pay now"
-    }
   }
 };
 const resources = [
