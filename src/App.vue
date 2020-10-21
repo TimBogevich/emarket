@@ -150,10 +150,15 @@
           </v-list-item>
           <v-menu>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn text dark v-bind="attrs" v-on="on" class="pa-0">
-                <flag  :iso="flags[$i18n.locale]" /> 
-                <span class="ml-1">{{$i18n.locale}}</span>
-              </v-btn>
+              <v-list-item link v-bind="attrs" v-on="on">
+                <v-list-item-content >
+                  <v-list-item-title>
+                    <flag :iso="flags[$i18n.locale]" /> 
+                    <span class="ml-1">{{$i18n.locale}}</span>
+                  </v-list-item-title>
+
+                </v-list-item-content>
+              </v-list-item>
             </template>
             <v-list>
               <v-list-item v-for="(item, index) in langs" :key="index" @click="setLocale(item)">

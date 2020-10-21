@@ -1,1 +1,187 @@
-{}
+{
+  "about": {
+    "about": "Die Deutsche Apotheke ist ein führender Vertreiber deutscher Arzneimittel und medizinischer Versorgung mit einem integrierten Serviceansatz. Wir bieten eine breite Palette von Dienstleistungen an, von der Auswahl der Arzneimittel bis zur Lieferung großer Mengen von Arzneimitteln aus Deutschland in die GUS-Staaten. Unser Online-Hypermarkt bietet eine große Auswahl an Medikamenten, Vitaminen, Nahrungsergänzungsmitteln, Cremes, Gelen und verwandten Produkten.",
+    "aboutUs": "Über uns",
+    "alwaysOn": "Immer in Kontakt",
+    "fast": "Schnelle Auftragsabwicklung",
+    "fourDays": "Lieferung ab 4 Tagen",
+    "garanty": "Qualitätssicherung von Waren",
+    "garanty2": "Medikamente ohne Fälschungen",
+    "goods": "Mehr als 1000 Produkte",
+    "goods2": "10 Hersteller",
+    "ourBenefits": "unsere Vorteile",
+    "personalService": "Persönlicher Service"
+  },
+  "account": {
+    "address": "Die Anschrift",
+    "checkAddress": "Überprüfen Sie die Adresse sorgfältig",
+    "chooseCountry": "wähle ein Land",
+    "city": "Stadt",
+    "lastName": "Nachname",
+    "name": "Name",
+    "telephone": "Telefon",
+    "zip": "Index"
+  },
+  "appBar": {
+    "cart": "Korb",
+    "siteName": "Demo-Apotheke"
+  },
+  "cart": {
+    "DHLDelivery": "DHL Versand",
+    "address": "Die Anschrift",
+    "byFor": "Kaufen für",
+    "city": "Stadt",
+    "delete": "Die Position wird gelöscht",
+    "dialogInsufficient": "Ihre Kontaktinformationen sind nicht vollständig. Können Sie sie bearbeiten?",
+    "dialogLogin": "Anmeldung erforderlich",
+    "orderWillBeDeliverd": "Die Bestellung wird an die Adresse gesendet",
+    "service": "Bedienung",
+    "to": "angesprochen"
+  },
+  "contacts": {
+    "chatTitle": "Live-Chat",
+    "initMessage": "Hallo, wenn Sie Fragen haben, schreiben Sie uns bitte",
+    "placeholder": "eine Nachricht schicken"
+  },
+  "countries": {
+    "belarus": "Weißrussland",
+    "kasachstan": "Kasachstan",
+    "russia": "Russland",
+    "ukraine": "Ukraine"
+  },
+  "delivery": {
+    "chooseCountriy": "wähle ein Land",
+    "row1": "Der Versand erfolgt per DHL, siehe Details",
+    "row2": "Zusätzlich wird eine Servicegebühr von 50 EUR erhoben",
+    "row3": "Was ist in der Servicegebühr enthalten:",
+    "row4": "Einkaufen in einer Apotheke",
+    "row5": "Pakete verpacken und kombinieren",
+    "row6": "Erklärung ausfüllen",
+    "row7": "Bestimmungsortversand"
+  },
+  "dialogAreYouSure": {
+    "areYouSure": "Sind sie sicher?",
+    "no": "Nein",
+    "yes": "Ja"
+  },
+  "filter": {
+    "ampullen": "Ampullen",
+    "augencreme": "Augencreme",
+    "bad": "Bad",
+    "balsam": "Balsam",
+    "beutel": "Tasche",
+    "bonbons": "Süßigkeiten",
+    "brausetabletten": "Brausetabletten",
+    "creme": "Sahne",
+    "deospray": "Deodorant Spray",
+    "dragees": "Dragee",
+    "duschgel": "Duschgel",
+    "elixier": "Elixier",
+    "emulsion": "Emulsion",
+    "fettsalbe": "fettige Salbe",
+    "filmtabletten": "Filmtabletten",
+    "flaschen": "Flasche",
+    "flüssigkeit": "Flüssigkeit",
+    "gel": "Gel",
+    "gesichtsmaske": "medizinische Maske",
+    "granulat": "Granulat",
+    "haarsp": "Haare sp",
+    "hartkapseln": "harte Kapseln",
+    "kapseln": "Kapseln",
+    "kapseln magensaftresistent": "gegen Magensaft resistente Kapseln",
+    "kaudragees": "Caudrage",
+    "kombipackung": "Kombinationspaket",
+    "konzentrat": "konzentrieren",
+    "liquidum": "Liquidum",
+    "lotion": "Lotion",
+    "lutschtabletten": "Lutscher",
+    "milch": "Milch",
+    "nachtcreme": "Nachtcreme",
+    "pastillen": "Lutschtabletten",
+    "pellets": "Pellets",
+    "pflaster": "Heftpflaster",
+    "puder": "Pulver",
+    "pulver": "Pulver",
+    "salbe": "Salbe",
+    "salz": "Salz-",
+    "schaum": "Schaum",
+    "seife": "Seife",
+    "shampoo": "Shampoo",
+    "spray": "sprühen",
+    "stifte": "Die Stifte",
+    "suspension": "Suspension",
+    "tabletten": "Pillen",
+    "tabletten magensaftresistent": "gastro-resistente Tabletten",
+    "tagescreme": "Tägliche Sahne",
+    "tinktur": "Tinktur",
+    "tonikum": "Tonic",
+    "trinkampullen": "Ampullen zum Trinken",
+    "tropfen": "Tropfen",
+    "tube": "eine Tube",
+    "verband": "Verband"
+  },
+  "general": {
+    "allergy": "Allergie",
+    "cosmetics": "Kosmetika",
+    "diabetes": "Diabetes",
+    "diet": "Diät",
+    "digestion": "Verdauung",
+    "exit": "Abmelden?",
+    "eyes": "Augen und Ohren",
+    "fammilyPlanning": "Schwangerschaft und Familienplanung",
+    "flu": "Influenza und Erkältungen",
+    "heart": "Herz und Blutgefäße",
+    "muscules": "Muskeln und Gelenke",
+    "painkillers": "Schmerzmittel",
+    "relaxators": "Beruhigungsmittel",
+    "skean": "Haut, Nägel, Haare",
+    "teeth": "Zähne",
+    "urology": "Urologie, Nieren",
+    "vitamins": "Vitamine"
+  },
+  "home": {
+    "mostPopular": "Am beliebtesten"
+  },
+  "item": {
+    "amount": "Nummer",
+    "delete": "Löschen",
+    "linkToMedpex": "Link zu medpex",
+    "toCart": "in den Korb"
+  },
+  "login": {
+    "cantRestorePassword": "Kennwort kann nicht wiederhergestellt werden, Benutzer existiert nicht.",
+    "email": "Mail",
+    "forgot": "Passwort vergessen?",
+    "login": "Betreten",
+    "loginWithFacebook": "Mit Facebook einloggen",
+    "loginWithGoogle": "Melden Sie sich mit Google an",
+    "password": "Passwort",
+    "registration": "Anmeldung",
+    "registrationFailed": "Die Registrierung war nicht erfolgreich. Der Benutzer existiert bereits.",
+    "restore": "Wiederherstellen"
+  },
+  "navDraw": {
+    "about": "Über Store",
+    "account": "Konto",
+    "contact": "Kontakte",
+    "delivery": "Lieferung",
+    "exit": "Ausgang",
+    "favorites": "Gewählt",
+    "myData": "Meine Details",
+    "myOrders": "Meine Bestellungen"
+  },
+  "orders": {
+    "noOrders": "Ups .. noch keine Bestellungen",
+    "orderDate": "Auftragsdatum",
+    "orderNumber": "Bestellnummer",
+    "orderPrice": "Die Kosten",
+    "sentAddress": "An Adresse gesendet",
+    "stage1": "Bestellung aufgegeben",
+    "stage2": "Lieferung ins Lager",
+    "stage3": "Lagerware",
+    "stage4": "Werden die Waren versendet?"
+  },
+  "search": {
+    "medicineName": "Medikamentenname oder PZN"
+  }
+}
