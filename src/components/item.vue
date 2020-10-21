@@ -83,7 +83,7 @@
           </v-row>
           <v-row v-if="itemsCategory.selectCountSelected > 1" class="justify-end mr-3">
             <span class="caption">
-              {{itemsCategory.productPrice * itemsCategory.selectCountSelected}} €
+              {{(itemsCategory.productPrice * itemsCategory.selectCountSelected).toFixed(2)}} €
             </span>
           </v-row>
           <v-row class="justify-end align-center">

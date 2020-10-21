@@ -3,6 +3,7 @@ import axios from 'axios'
 import { make, set, dispatch } from 'vuex-pathify'
 import router from '@/router'
 import i18n from '../../i18n';
+import jsdom from "jsdom"
 
 const  state =  {
   items : [],
@@ -273,8 +274,16 @@ const actions = {
     }
   },
   async loadDetails() {
-    let categoryItems = await this.$algolia.search(this.pzn,{})
-    return  categoryItems.hits[0]
+    let categoryItems = await this._vm.$algolia.search(this.pzn,{})
+    let item = categoryItems.hits[0]
+    let page = await axios.post("https://medpex-proxy-nocors.oskarokb.workers.dev/?target=https://www.medpex.de/" + item.medpexLink);
+    const dom = new jsdom.JSDOM(page.data)
+    let doc = dom.window.document
+    let desc = doc.querySelector('.content--productDescription')
+    item.description  = desc?.textContent
+    let imgs = [...doc.querySelectorAll('.swiper-slide > img')].map(i => i.src)
+    item.images = imgs
+    return Promise.resolve(item);
   
   },
   async parsePage() {
