@@ -6,7 +6,7 @@
           v-if="visible"
           :participants="participants"
           :myself="myself"
-          :messages="messages"
+          :messages="messagesToShow"
           :chat-title="chatTitle"
           :placeholder="placeholder"
           :colors="colors"
@@ -42,14 +42,13 @@ export default {
       visible: true,
       participants: [
         {
-          name: "Яша",
+          name: "Jasha",
           id: 1,
           profilePicture:
             "https://lh3.googleusercontent.com/-G1d4-a7d_TY/AAAAAAAAAAI/AAAAAAAAAAA/AAKWJJPez_wX5UCJztzEUeCxOd7HBK7-jA.CMID/s83-c/photo.jpg",
         },
       ],
-      chatTitle: "Чат с поддержкой",
-      placeholder: "Отправить сообщение",
+
       colors: {
         header: {
           bg: "#d30303",
@@ -81,26 +80,7 @@ export default {
       submitIconSize: 25,
       closeButtonIconSize: "20px",
       asyncMode: false,
-      toLoad: [
-        // {
-        //   content:
-        //     "Здравствуйте, если у вас возникли вопросы, пожалуйста пишите нам",
-        //   myself: false,
-        //   participantId: 2,
-        //   timestamp: {
-        //     year: 2011,
-        //     month: 3,
-        //     day: 5,
-        //     hour: 10,
-        //     minute: 10,
-        //     second: 3,
-        //     millisecond: 123,
-        //   },
-        //   uploaded: true,
-        //   viewed: true,
-        //   type: "text",
-        // },
-      ],
+      toLoad: [],
       scrollBottom: {
         messageSent: true,
         messageReceived: false,
@@ -161,7 +141,28 @@ export default {
   },
   computed: {
     messages : get("general/messages"),
+    messagesToShow() {
+      if(this.messages.length) {
+        return this.messages
+      } else {
+        return  [{
+          content: this.$t("contacts.initMessage"),
+          myself: false,
+          participantId: 1,
+          timestamp: new Date(),
+          uploaded: true,
+          viewed: true,
+          type: "text",
+        }]
+      }
+    },
     user : get("general/user"),
+    chatTitle() {
+      return this.$t("contacts.chatTitle")
+    },
+    placeholder() {
+      return this.$t("contacts.placeholder")
+    },
     myself() {
       let user = Object.assign({}, this.user)
       user.profilePicture = user.photoURL

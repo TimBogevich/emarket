@@ -48,8 +48,8 @@
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex xs6>
-            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
-            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>Удалить</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">{{$t("item.toCart")}}</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>{{$t("item.toCart")}}</v-btn>
           </v-flex>
 
 
@@ -72,7 +72,7 @@
           <v-card-text >
             {{itemsCategory.desc}}
             <br v-if="mode==='category'">
-            <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">Ссылка на medpex</a>
+            <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">{{$t("item.linkToMedpex")}}</a>
           </v-card-text>
         </v-flex>
         <v-flex xs12 md3 >
@@ -113,8 +113,8 @@
 
 
             <v-flex flex-direction: row xs5 class="justify-end">
-              <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">В корзину</v-btn>
-              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" color="accent">Удалить</v-btn>
+              <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">{{$t("item.toCart")}}</v-btn>
+              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" color="accent">{{$t("item.delete")}}</v-btn>
             </v-flex>
 
           </v-row>

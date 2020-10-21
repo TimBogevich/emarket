@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import { make, set, dispatch } from 'vuex-pathify'
 import router from '@/router'
-
+import i18n from '../../i18n';
 
 const  state =  {
   items : [],
@@ -18,12 +18,7 @@ const  state =  {
   cart : [],
   user : null,
   messages : [],
-  coutries : [
-    {text : "Россия", value : "russia", iso : "ru"},
-    {text : "Украина", value : "ukrain", iso : "ua"},
-    {text : "Казахстан", value : "kasachstan", iso : "kz"},
-    {text : "Беларусь", value : "belarus", iso : "by"},
-  ]
+
 }
 
 const mutations =  {
@@ -31,6 +26,15 @@ const mutations =  {
     }
 
 const getters = {
+
+  countries({state, actions}) {
+    return [
+      {text : i18n.t("countries.russia"), value : "russia", iso : "ru"},
+      {text : i18n.t("countries.ukraine"), value : "ukrain", iso : "ua"},
+      {text : i18n.t("countries.kasachstan"), value : "kasachstan", iso : "kz"},
+      {text : i18n.t("countries.belarus"), value : "belarus", iso : "by"},
+    ]
+  },
   userDatIsValid(state){
     try {
       return Boolean(state.user.address && state.user.city && state.user.country && state.user.lastName && state.user.name && state.user.telephone && state.user.zip)
@@ -173,7 +177,7 @@ const actions = {
     }
   },
   async deleteFromCart({commit,state}, {index, item}) {
-    let response = await this._vm.$areYouSure(`Будет удалена позиция ${item.productName}`)
+    let response = await this._vm.$areYouSure(i18n.t("cart.delete") + " " + item.productName)
     if(response) {
       Vue.delete(state.cart, index)
       await this._vm.$db.collection('users').doc(state.user.uid).collection('cart').doc(item.pzn).delete()
@@ -236,18 +240,6 @@ const actions = {
     let messagesRef = await this._vm.$db.collection('users').doc(uid).collection('messages').get()
     let messages = messagesRef.docs.map(i => i.data())
     messages = messages.map(i => JSON.parse(i.message))
-    if (messages.length === 0) {
-      messages.push(        {
-        content:
-          "Здравствуйте, если у вас возникли вопросы, пожалуйста пишите нам",
-        myself: false,
-        participantId: 1,
-        timestamp: new Date(),
-        uploaded: true,
-        viewed: true,
-        type: "text",
-      })
-    }
     commit("SET_MESSAGES", messages)
   },
 
@@ -271,7 +263,7 @@ const actions = {
     }
   },
   async logOut({commit,state}) {
-    let response = await this._vm.$areYouSure("Выйти?")
+    let response = await this._vm.$areYouSure(i18n.t("general.exit"))
     if(response) {
       let logout = await this._vm.$firebase.auth().signOut()
       commit("SET_USER", null)
@@ -279,6 +271,14 @@ const actions = {
       commit("SET_ORDERS", [])
       commit("SET_MESSAGES", [])
     }
+  },
+  async loadDetails() {
+    let categoryItems = await this.$algolia.search(this.pzn,{})
+    return  categoryItems.hits[0]
+  
+  },
+  async parsePage() {
+
   }
 }
 

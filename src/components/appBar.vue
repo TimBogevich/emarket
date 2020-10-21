@@ -14,7 +14,7 @@
           <v-btn to="/" text class="ma-3">
             <v-icon>mdi-plus-thick</v-icon>
             <h3 class="hidden-md-and-down">
-              Демо аптека
+              {{$t("appBar.siteName")}}
             </h3>
           </v-btn>
         </v-flex>
@@ -45,7 +45,7 @@
             <span 
             v-if="['lg', 'xl'].includes(this.$vuetify.breakpoint.name)"
             >
-              Корзина
+              {{$t("appBar.cart")}}
             </span> 
             <v-icon>mdi-cart</v-icon>
           </v-btn>

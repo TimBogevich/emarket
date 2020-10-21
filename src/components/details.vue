@@ -20,7 +20,7 @@
           <v-flex xs2 class="mx-3">
             <v-text-field
               name="amount"
-              label="Количество"
+              :label="$t('item.amount')"
               id="amount"
               v-model.number="item.selectCountSelected"
               type="number"
@@ -33,7 +33,9 @@
               </v-icon>
             </v-btn>
           </v-flex>
-          <v-btn @click="toCart(item)" color="success">В корзину</v-btn>
+          <v-btn @click="toCart(item)" color="success">
+            {{$t("item.toCart")}}
+          </v-btn>
         </v-row>
       </v-flex>
     </v-row>
@@ -106,10 +108,8 @@
       isLiked(pzn) {
         return this.likedItems.find(i => i.pzn == pzn)
       },
-      async load() {
-        let categoryItems = await this.$algolia.search(this.pzn,{})
-        this.item = categoryItems.hits[0]
-        return
+      async load(pzn) {
+        await this.$store.dispatch("general/loadDetails")
       },
       likeItem(item) {
         this.$store.dispatch("general/likeItem", item)
@@ -127,12 +127,12 @@
     },
     watch: {
       async pzn(val, oldVal) {
-        await this.load()
+        await this.load(this.pzn)
         await this.parsePage()
       }
     },
     async mounted() {
-      await this.load()
+      await this.load(this.pzn)
       await this.parsePage()
       this.zoomerKey += 1
     },

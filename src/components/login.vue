@@ -11,7 +11,7 @@
               <v-icon left>
                 mdi-google
               </v-icon>
-              Войти через Google
+              {{$t("login.loginWithGoogle")}}
             </v-btn>
           </v-row>
           <v-row class="ma-5">
@@ -19,7 +19,7 @@
               <v-icon left>
                 mdi-facebook
               </v-icon>
-              Войти через Facebook
+              {{$t("login.loginWithGoogle")}}
             </v-btn>
           </v-row>
           <v-divider></v-divider>
@@ -49,14 +49,18 @@
           </v-row>
 
           <v-row class="ma-5 justify-center">
-            <v-btn @click="emailLogin()" color="primary">Войти</v-btn>
+            <v-btn @click="emailLogin()" color="primary">
+              {{$t("login.login")}}
+            </v-btn>
           </v-row>
           </v-form>
 
           <v-divider></v-divider>
 
           <v-row class="ma-5 justify-center">
-            <v-btn @click="view = 'registration'" color="success">Регистрация</v-btn>
+            <v-btn @click="view = 'registration'" color="success">
+              {{$t("login.registration")}}
+            </v-btn>
           </v-row>
 
       </v-card>
@@ -99,7 +103,9 @@
         </v-row>
 
         <v-row class="ma-5 justify-center">
-          <v-btn @click="emailRegistration()" color="primary">Регистрация</v-btn>
+          <v-btn @click="emailRegistration()" color="primary">
+            {{$t("login.registration")}}
+          </v-btn>
         </v-row>
         </v-form>
       </v-card>
@@ -127,7 +133,9 @@
           ></v-text-field>
         </v-row>
         <v-row class="ma-5 justify-center">
-            <v-btn @click="emailResetPassword()" color="primary">Восстановить</v-btn>
+            <v-btn @click="emailResetPassword()" color="primary">
+              {{$t("login.restore")}}
+            </v-btn>
         </v-row>
         </v-form>
       </v-card>
@@ -173,7 +181,7 @@
           let response = await firebase.auth().sendPasswordResetEmail(this.login)
           this.view = "login"
         } catch (error) {
-          this.message = "Не удается восстановить пароль, пользователь не существует."
+          this.message = this.$t("login.cantRestorePassword")
         }
       },
       async emailRegistration() {
@@ -186,7 +194,7 @@
           this.view = "login"
         }
         catch(error) {
-          this.message = "Регистрация не успешна. Пользователь уже существует."
+          this.message = this.$t("login.registrationFailed") 
         }
         
       }

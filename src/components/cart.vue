@@ -7,7 +7,7 @@
             <v-row class="justify-center">
               <v-flex md8 class="justify-center mb-5">
                 <p style="word-wrap: break-word;" class="text-center">
-                  Заказ будет отправлен по адресу: {{$t("countries." + user.country)}}, город {{user.city}}, Адрес: {{user.address}}, На имя: {{user.name}} {{user.lastName}}
+                  {{$t("countries.orderWillBeDeliverd")}}: {{$t("countries." + user.country)}}, {{$t("cart.city")}} {{user.city}}, {{$t("cart.address")}}: {{user.address}}, {{$t("cart.to")}}: {{user.name}} {{user.lastName}}
 
                 </p>
 
@@ -17,7 +17,7 @@
           </div>
           <v-row v-if="!showCard" class="justify-center mb-5">
             <v-btn @click="toBuy()" color="success">
-              Купить за {{cartTotalPrice.toFixed(2)}} €
+              {{$t("cart.byFor")}} {{cartTotalPrice.toFixed(2)}} €
             </v-btn>
           </v-row>
           <v-row v-if="showCard" class="justify-center mb-5">
@@ -42,7 +42,7 @@
                 </v-icon>
               </v-row>
               <v-row class="justify-center">
-                Сервис
+                {{$t("cart.service")}}
               </v-row>
               <v-row class="justify-center">
                 <strong>
@@ -57,7 +57,7 @@
                 </v-icon>
               </v-row>
               <v-row class="justify-center">
-                Доставка DHL
+                {{$t("cart.DHLDelivery")}}
               </v-row>
               <v-row class="justify-center">
                 <strong>
@@ -151,14 +151,14 @@
       },
       async toBuy() {
         if(!this.user) {
-          let response = await this.$areYouSure("Необходимо авторизоваться")
+          let response = await this.$areYouSure(this.$t("cart.dialogLogin"))
           if(response) {
             this.$router.push("/account")
           }
           return
         }
         if(!this.userDatIsValid) {
-          let response = await this.$areYouSure("Ваша контактная информация не полная, перейти к редактированию?")
+          let response = await this.$areYouSure(this.$t("cart.dialogInsufficient"))
           if(response) {
             this.$router.push("/account")
           } else {

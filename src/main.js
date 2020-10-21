@@ -13,7 +13,7 @@ import ProductZoomer from 'vue-product-zoomer2'
 import HeadLoader from "vue-ext-files-head-loader";
 import firebase from "./firebaseConf"
 Vue.config.productionTip = false
-
+import FlagIcon from 'vue-flag-icon'
 
 
 import areYouSure from './components/areYouSure'
@@ -30,7 +30,7 @@ Vue.prototype.$dialogCardPayment = dialogCardPayment
 Vue.prototype.$algolia = algolia
 
 
- 
+Vue.use(FlagIcon);
 Vue.use(HeadLoader);
 Vue.use(ProductZoomer)
 Vue.use(ModalDialogs) 

@@ -8,7 +8,7 @@
       flat
       hide-no-data
       hide-details
-      label="Имя лекарства или PZN"
+      :label="$t('search.medicineName')"
       solo-inverted
     >
       <template v-slot:item="{ item }">

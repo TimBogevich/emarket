@@ -9,12 +9,16 @@
             </v-row>
           </template>
         </v-img>
-        <h3>О нас</h3>
+        <h3>
+          {{$t("about.aboutUs")}}
+        </h3>
         <p>
-          {{about}}
+          {{$t("about.about")}}
         </p>
 
-        <h3>Наши преимущества</h3>
+        <h3>
+          {{$t("about.ourBenefits")}}
+        </h3>
         <v-row class="justify-center mt-5">
 
           <v-flex xs12 md6 lg3 class="my-5">
@@ -24,10 +28,10 @@
               </v-icon>
             </v-row>
             <v-row class="justify-center">
-              Персональный сервис
+              {{$t("about.personalService")}}
             </v-row>
             <v-row class="justify-center">
-              Всегда на связи
+              {{$t("about.alwaysOn")}}
             </v-row>
           </v-flex>
 
@@ -38,10 +42,10 @@
               </v-icon>
             </v-row>
             <v-row class="justify-center">
-              Быстрая обработка заказов
+              {{$t("about.fast")}}
             </v-row>
             <v-row class="justify-center">
-              Доставка от 4х дней
+              {{$t("about.fourDays")}}
             </v-row>
           </v-flex>
 
@@ -52,10 +56,10 @@
               </v-icon>
             </v-row>
             <v-row class="justify-center">
-              Гарантия качества товаров
+              {{$t("about.garanty")}}
             </v-row>
             <v-row class="justify-center">
-              Лекарства без подделок
+              {{$t("about.garanty2")}}
             </v-row>
           </v-flex>
 
@@ -67,10 +71,10 @@
               </v-icon>
             </v-row>
             <v-row class="justify-center">
-              Более 1000 товаров
+              {{$t("about.goods")}}
             </v-row>
             <v-row class="justify-center">
-              10 производителей
+              {{$t("about.goods")}}
             </v-row>
           </v-flex>
 
@@ -87,16 +91,7 @@
   import {get, sync} from 'vuex-pathify'
 
   export default {
-    data() {
-      return {
-        about : `Немецкая аптека — ведущий дистрибьютор немецких лекарств и медицинских материалов с комплексным подходом к обслуживанию. 
-        Мы предлагаем полный комплекс услуг от подбора лекарств до доставки крупных партий лекарств из Германии в страны СНГ. 
-        В нашем онлайн-гипермаркете представлен широкий выбор лекарст, витаминов, биологически активных добавок, кремов, гелей и сопутствующих товаров.`
-      }
-    },
-    computed: {
 
-    },
   }
 </script>
 

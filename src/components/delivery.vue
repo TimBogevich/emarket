@@ -3,18 +3,18 @@
     <v-row class="justify-center ma-3">
       <v-flex xs12 md8>
         <v-select
-          :items="coutries"
+          :items="countries"
           v-model="selected"
-          label="Выберите страну"
+          :label="$t('delivery.chooseCountriy')"
         ></v-select>
 
-        <p>Доставка осуществляется через DHL, смотрите подробности <a target="_blank" href="https://www.dhl.de/en/privatkunden/pakete-versenden/weltweit-versenden/preise-international.html">на сайте DHL</a> </p>
-        <p>Дополнительно взымается сервисный сбор 50 EUR</p>
-        <p>Что входит в сервисный сбор:  </p>
-          <li>Покупка товаров в аптеке</li>
-          <li>Упаковка и комбинирование посылок</li>
-          <li>Заполнение декларации</li>
-          <li>Отправка по месту назначения </li>
+        <p> {{$t("delivery.row1")}} <a target="_blank" href="https://www.dhl.de/en/privatkunden/pakete-versenden/weltweit-versenden/preise-international.html">на сайте DHL</a> </p>
+        <p>{{$t("delivery.row2")}}</p>
+        <p>{{$t("delivery.row3")}}  </p>
+          <li>{{$t("delivery.row4")}}</li>
+          <li>{{$t("delivery.row5")}}</li>
+          <li>{{$t("delivery.row6")}}</li>
+          <li>{{$t("delivery.row7")}} </li>
 
         <v-img 
         class="mt-5"
@@ -45,9 +45,9 @@
       }
     },
     computed: {
-      coutries: sync("general/coutries"),
+      countries: get("general/countries"),
       selectedCountry() {
-        return this.coutries.find(i => i.value === this.selected)
+        return this.countries.find(i => i.value === this.selected)
       },
       image() {
         return "https://firebasestorage.googleapis.com/v0/b/apotheke-171c2.appspot.com/o/" + this.selectedCountry.iso + ".png?alt=media"

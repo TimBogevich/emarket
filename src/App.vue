@@ -14,7 +14,7 @@
               <v-icon>
                 mdi-account
               </v-icon>
-              Войти
+              {{$t("login.login")}}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -30,7 +30,9 @@
       >
         <template v-slot:activator>
           <v-list-item-content dense>
-            <v-list-item-title>Аккаунт</v-list-item-title>
+            <v-list-item-title>
+              {{$t("navDraw.account")}}
+            </v-list-item-title>
           </v-list-item-content>
         </template>
 
@@ -40,7 +42,7 @@
               <v-icon>
                 mdi-account
               </v-icon>
-              Мои данные
+              {{$t("navDraw.myData")}}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -51,7 +53,7 @@
               <v-icon>
                 mdi-truck-fast
               </v-icon>
-              Мои заказы
+              {{$t("navDraw.myOrders")}}
               <v-avatar
               color="grey"
               size="20"
@@ -70,7 +72,7 @@
               <v-icon>
                 mdi-heart
               </v-icon>
-              Избраное
+              {{$t("navDraw.favorites")}}
               <v-avatar
               color="grey"
               size="20"
@@ -80,6 +82,16 @@
               </span>
               </v-avatar>
             </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item dense v-show="user" link @click="logOut()">
+          <v-list-item-content >
+            <v-list-item-title>
+              <v-icon>mdi-exit-run</v-icon>
+              {{$t("navDraw.exit")}}
+            </v-list-item-title>
+            
           </v-list-item-content>
         </v-list-item>
 
@@ -110,21 +122,47 @@
       <template v-slot:append >
         <v-list
          dense>
-          <v-list-item link v-for="item in bookmarks" :key="item.name" :to="item.url">
-            <v-list-item-content >
-              <v-list-item-title>{{item.name}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item v-show="user" link @click="logOut()">
+
+
+          <v-list-item link to="/contacts">
             <v-list-item-content >
               <v-list-item-title>
-                <v-icon>mdi-exit-run</v-icon>
-                Выход
+                {{$t("navDraw.contact")}}
               </v-list-item-title>
-              
             </v-list-item-content>
           </v-list-item>
+
+          <v-list-item link to="/about">
+            <v-list-item-content >
+              <v-list-item-title>
+                {{$t("navDraw.about")}}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item link to="/delivery">
+            <v-list-item-content >
+              <v-list-item-title>
+                {{$t("navDraw.delivery")}}
+              </v-list-item-title>
+
+            </v-list-item-content>
+          </v-list-item>
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn text dark v-bind="attrs" v-on="on" class="pa-0">
+                <flag  :iso="flags[$i18n.locale]" /> 
+                <span class="ml-1">{{$i18n.locale}}</span>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(item, index) in langs" :key="index" @click="setLocale(item)">
+                <v-list-item-title>
+                  <flag :iso="flags[item]" /> {{item.toUpperCase()}}
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-list>
       </template>
 
@@ -163,7 +201,12 @@ import appBar from "./components/appBar"
   export default {
     components : {appBar},
     data: () => ({
-
+      langs: ["en", "de", "ru"],
+      flags: {
+        en : "gb",
+        de : "de",
+        ru : "ru",
+      }
     }),
     computed: {
       categories : get("general/categories"),
@@ -175,22 +218,12 @@ import appBar from "./components/appBar"
       loaderIsVisible() {
         return this.$store.getters["vuexActionTracker/hasRunningActions"]
       },
-      bookmarks() {
-        if(this.user) {
-          return [
-            {name : "Контакты", url : "/contacts"},
-            {name : "О магазине", url : "/about"},
-            {name : "Доставка", url : "/delivery"},
-         ]
-        } else {
-          return [
-            {name : "О магазине", url : "/about"},
-            {name : "Доставка", url : "/delivery"},
-         ]
-        }
-      }
     },
     methods: {
+      setLocale(locale) {
+        this.$i18n.locale = locale;
+        this.locale = locale;
+      },
       logOut() {
         this.$store.dispatch("general/logOut")
       },

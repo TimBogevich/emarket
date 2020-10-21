@@ -13,7 +13,9 @@
           </v-img>
         </v-row>
         <v-row class="justify-center">
-          <strong class="text--disabled">Упс.. пока нет заказов</strong>
+          <strong class="text--disabled">
+            {{$t("orders.noOrders")}}
+          </strong>
         </v-row>
       </v-flex>
     </v-row>
@@ -21,38 +23,38 @@
     <v-flex v-else class="" xs11 md8 v-for="(item, index) in orders" :key="index">
       <v-card color="#FEFEFE" class="my-5">
         <v-card-title primary-title>          
-          Номер заказа: {{item.date}}
+          {{$t("orders.orderNumber")}}: {{item.date}}
           <v-spacer></v-spacer>
-          Стоимость: {{item.price.toFixed(2)}} €
+          {{$t("orders.orderPrice")}}: {{item.price.toFixed(2)}} €
         </v-card-title>
         <v-card-subtitle>
-          Дата заказа: {{item.date | moment("DD.MM.YYYY HH:mm:ss")}} <br>
+          {{$t("orders.orderDate")}}: {{item.date | moment("DD.MM.YYYY HH:mm:ss")}} <br>
         </v-card-subtitle>
          
         <v-card-text>
-          Отправлено по адресу: {{item.city}}, {{item.address}}, {{item.zip}}
+          {{$t("orders.sentAddress")}}: {{item.city}}, {{item.address}}, {{item.zip}}
         </v-card-text>
 
         <v-flex class="mx-5 my-2">
           <v-stepper dense v-model="item.status">
             <v-stepper-header>
               <v-stepper-step :complete="item.status >= 1" step="1">
-                Заказ размещен
+                {{$t("orders.stage1")}}
               </v-stepper-step>
               <v-divider></v-divider>
 
               <v-stepper-step :complete="item.status >= 2" step="2">
-                Доставляется на склад
+                {{$t("orders.stage2")}}
               </v-stepper-step>
               <v-divider></v-divider>
 
               <v-stepper-step :complete="item.status >= 3" step="3">
-                Товар на складе
+                {{$t("orders.stage3")}}
               </v-stepper-step>
               <v-divider></v-divider>
 
               <v-stepper-step :complete="item.status >= 4" step="4">
-                Товар отправлен
+                {{$t("orders.stage3")}}
               </v-stepper-step>
             </v-stepper-header>
           </v-stepper>

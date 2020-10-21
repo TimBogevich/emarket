@@ -11,7 +11,7 @@
               <v-text-field
                 name="name"
                 v-model="user.name"
-                label="Имя"
+                :label="$t('account.name')"
                 id="name"
               ></v-text-field>
 
@@ -19,14 +19,14 @@
                 name="lastname"
                 type="text"
                 v-model="user.lastName"
-                label="Фамилия"
+                :label="$t('account.lastName')"
                 id="lastname"
               ></v-text-field>
 
               <v-select
-                :items="coutries"
+                :items="countries"
                 v-model="user.country"
-                label="Выберите страну"
+                :label="$t('account.chooseCountry')"
                 id="country"
                 name="country"
               ></v-select>
@@ -35,7 +35,7 @@
                 name="telephone"
                 type="text"
                 v-model="user.telephone"
-                label="Телефон"
+                :label="$t('account.telephone')"
                 id="telephone"
               ></v-text-field>
 
@@ -51,22 +51,22 @@
             <v-text-field
               name="zip"
               v-model="user.zip"
-              label="Индекс"
+              :label="$t('account.zip')"
               id="zip"
             ></v-text-field>
 
             <v-text-field
               name="city"
               v-model="user.city"
-              label="Город"
+              :label="$t('account.city')"
               id="city"
             ></v-text-field>
 
             <v-textarea
               name="input-7-1"
-              label="Адрес"
               v-model="user.address"
-              hint="Внимательно проверьте адрес"
+              :label="$t('account.address')"
+              :hint="$t('account.address')"
             ></v-textarea>
           </v-flex>
         </v-row>
@@ -86,7 +86,7 @@
   export default {
     computed: {
       user: sync("general/user"),
-      coutries: sync("general/coutries"),
+      countries: get("general/countries"),
     },
     watch: {
       user: {

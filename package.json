@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.vue' --locales './src/locales/**/*.json'",
+    "vue-i18n-extract": "vue-i18n-extract"
   },
   "dependencies": {
+    "@firebase/messaging": "^0.7.1",
     "@growthbunker/vuesocial": "^0.1.2",
     "algoliasearch": "^4.5.1",
     "axios": "^0.20.0",
@@ -22,7 +24,9 @@
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
     "vue-ext-files-head-loader": "^0.1.2",
+    "vue-flag-icon": "^1.0.6",
     "vue-i18n": "^8.22.0",
+    "vue-i18n-scanner": "^1.0.2",
     "vue-modal-dialogs": "^3.0.0",
     "vue-moment": "^4.1.0",
     "vue-mugen-scroll": "^0.2.6",
@@ -45,6 +49,7 @@
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-i18n": "^1.0.1",
+    "vue-i18n-extract": "^1.1.10",
     "vue-template-compiler": "^2.6.11"
   }
 }

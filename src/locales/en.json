@@ -1,1 +1,187 @@
-{}
+{
+  "account": {
+    "address": "The address",
+    "checkAddress": "Check the address carefully",
+    "chooseCountry": "select a country",
+    "city": "City",
+    "lastName": "Surname",
+    "name": "Name",
+    "telephone": "Phone",
+    "zip": "Index"
+  },
+  "appBar": {
+    "cart": "Cart",
+    "siteName": "Demo pharmacy"
+  },
+  "cart": {
+    "DHLDelivery": "DHL Shipping",
+    "address": "The address",
+    "byFor": "Buy for",
+    "city": "City",
+    "dialogInsufficient": "Your contact information is not complete, can you edit it?",
+    "dialogLogin": "Login required",
+    "orderWillBeDeliverd": "The order will be sent to the address",
+    "service": "Service",
+    "to": "addressed",
+    "delete": "The position will be deleted"
+  },
+  "countries": {
+    "russia": "Russia",
+    "ukraine": "Ukraine",
+    "belarus": "Belarus",
+    "kasachstan": "Kazakhstan"
+  },
+  "dialogAreYouSure": {
+    "areYouSure": "Are you sure?",
+    "no": "No",
+    "yes": "Yes"
+  },
+  "filter": {
+    "ampullen": "ampoules",
+    "augencreme": "eye cream",
+    "bad": "bath",
+    "balsam": "balm",
+    "beutel": "bag",
+    "bonbons": "sweets",
+    "brausetabletten": "effervescent tablets",
+    "creme": "cream",
+    "deospray": "deodorant spray",
+    "dragees": "dragee",
+    "duschgel": "shower gel",
+    "elixier": "elixir",
+    "emulsion": "emulsion",
+    "fettsalbe": "greasy ointment",
+    "filmtabletten": "film-coated tablets",
+    "flaschen": "bottle",
+    "flüssigkeit": "liquid",
+    "gel": "gel",
+    "gesichtsmaske": "medical mask",
+    "granulat": "granules",
+    "haarsp": "hair sp",
+    "hartkapseln": "hard capsules",
+    "kapseln": "capsules",
+    "kapseln magensaftresistent": "capsules resistant to gastric juice",
+    "kaudragees": "caudrage",
+    "kombipackung": "combination package",
+    "konzentrat": "concentrate",
+    "liquidum": "liquidum",
+    "lotion": "lotion",
+    "lutschtabletten": "lollipops",
+    "milch": "milk",
+    "nachtcreme": "night cream",
+    "pastillen": "lozenges",
+    "pellets": "pellets",
+    "pflaster": "adhesive plaster",
+    "puder": "powder",
+    "pulver": "powder",
+    "salbe": "ointment",
+    "salz": "salt",
+    "schaum": "foam",
+    "seife": "Soap",
+    "shampoo": "shampoo",
+    "spray": "spray",
+    "stifte": "the pencils",
+    "suspension": "suspension",
+    "tabletten": "pills",
+    "tabletten magensaftresistent": "gastro-resistant tablets",
+    "tagescreme": "Daily cream",
+    "tinktur": "tincture",
+    "tonikum": "tonic",
+    "trinkampullen": "ampoules for drinking",
+    "tropfen": "drops",
+    "tube": "a tube",
+    "verband": "Association"
+  },
+  "general": {
+    "allergy": "Allergy",
+    "cosmetics": "Cosmetics",
+    "diabetes": "Diabetes",
+    "diet": "Diet",
+    "digestion": "Digestion",
+    "eyes": "Eyes and ears",
+    "fammilyPlanning": "Pregnancy and family planning",
+    "flu": "Influenza and colds",
+    "heart": "Heart and blood vessels",
+    "muscules": "Muscles and joints",
+    "painkillers": "Pain reliever",
+    "relaxators": "Sedatives",
+    "skean": "Skin, nails, hair",
+    "teeth": "Teeth",
+    "urology": "Urology, kidneys",
+    "vitamins": "Vitamins",
+    "exit": "Log off?"
+  },
+  "item": {
+    "delete": "Delete",
+    "linkToMedpex": "Link to medpex",
+    "toCart": "to cart",
+    "amount": "number"
+  },
+  "login": {
+    "cantRestorePassword": "Unable to recover password, user does not exist.",
+    "email": "mail",
+    "forgot": "Forgot your password?",
+    "login": "To come in",
+    "loginWithFacebook": "Login with Facebook",
+    "loginWithGoogle": "Login with Google",
+    "password": "Password",
+    "registration": "registration",
+    "registrationFailed": "Registration was not successful. The user already exists.",
+    "restore": "Reestablish"
+  },
+  "navDraw": {
+    "about": "About Store",
+    "account": "Account",
+    "contact": "Contacts",
+    "delivery": "Delivery",
+    "exit": "Exit",
+    "favorites": "Favorites",
+    "myData": "My details",
+    "myOrders": "My orders"
+  },
+  "search": {
+    "medicineName": "Medicine name or PZN"
+  },
+  "about": {
+    "about": "The German Pharmacy is a leading distributor of German medicines and medical supplies with an integrated approach to service. We offer a full range of services from the selection of medicines to the delivery of large batches of drugs from Germany to the CIS countries. Our online hypermarket offers a wide selection of medicines, vitamins, dietary supplements, creams, gels and related products.",
+    "alwaysOn": "Always in touch",
+    "fast": "Fast order processing",
+    "fourDays": "Delivery from 4 days",
+    "garanty": "Quality assurance of goods",
+    "garanty2": "Medicines without fakes",
+    "goods": "More than 1000 products",
+    "goods2": "10 manufacturers",
+    "ourBenefits": "Our advantages",
+    "personalService": "Personal service",
+    "aboutUs": "About Us"
+  },
+  "home": {
+    "mostPopular": "Most Popular"
+  },
+  "orders": {
+    "noOrders": "Oops .. no orders yet",
+    "orderDate": "order date",
+    "orderNumber": "Order number",
+    "orderPrice": "The cost",
+    "sentAddress": "Sent to address",
+    "stage1": "Order placed",
+    "stage2": "Delivered to the warehouse",
+    "stage3": "Stock item",
+    "stage4": "Are the goods shipped"
+  },
+  "contacts": {
+    "chatTitle": "Live chat",
+    "initMessage": "Hello, if you have any questions, please write to us",
+    "placeholder": "send a message"
+  },
+  "delivery": {
+    "chooseCountriy": "select a country",
+    "row1": "Shipping is via DHL, see details",
+    "row2": "In addition, a service fee of 50 EUR is charged",
+    "row3": "What is included in the service fee:",
+    "row4": "Shopping at a pharmacy",
+    "row5": "Packing and combining parcels",
+    "row6": "Filling in the declaration",
+    "row7": "Destination dispatch"
+  }
+}
