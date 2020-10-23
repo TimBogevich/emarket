@@ -6,7 +6,7 @@
       max-width="400"
     >
       <v-card v-if="view === 'login'" class="pa-5">
-          <v-row class="ma-5">
+          <v-row class="my-2">
             <v-btn block dark color="#e06555"  @click="googleLogin()">
               <v-icon left>
                 mdi-google
@@ -14,12 +14,12 @@
               {{$t("login.loginWithGoogle")}}
             </v-btn>
           </v-row>
-          <v-row class="ma-5">
+          <v-row class="my-2">
             <v-btn block dark color="#3B5998" @click="facebookLogin()">
               <v-icon left>
                 mdi-facebook
               </v-icon>
-              {{$t("login.loginWithGoogle")}}
+              {{$t("login.loginWithFacebook")}}
             </v-btn>
           </v-row>
           <v-divider></v-divider>
@@ -165,11 +165,11 @@
     },
     methods: {
       async googleLogin() {
-        let response = await firebase.auth().signInWithPopup(this.$googleAuthProvider)
+        let response = await firebase.auth().signInWithRedirect(this.$googleAuthProvider)
         this.dialog = false
       },
       async facebookLogin() {
-        let response = await firebase.auth().signInWithPopup(this.$facebookAuthProvider)
+        let response = await firebase.auth().signInWithRedirect(this.$facebookAuthProvider)
         this.dialog = false
       },
       async emailLogin() {
