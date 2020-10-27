@@ -174,13 +174,7 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-progress-linear
-      :active="loaderIsVisible()"
-      indeterminate
-      absolute
-      color="red"
-      height="6"
-      ></v-progress-linear>
+
       <v-container
         :class="$route.path === '/' ? 'ma-0 pa-0' : null"
         fluid

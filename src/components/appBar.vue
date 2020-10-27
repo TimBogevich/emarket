@@ -51,7 +51,16 @@
           </v-btn>
         </v-badge>
       </v-row>
+      <v-progress-linear
+      :active="loaderIsVisible()"
+      indeterminate
+      bottom
+      fixed
+      color="white"
+      height="6"
+      ></v-progress-linear>
     </v-app-bar>
+
   </div>
 </template>
 
@@ -71,6 +80,9 @@
       drawer: sync("general/drawer"),
       isMobile() {
         return ["xs", "sm", "md"].includes(this.$vuetify.breakpoint.name)
+      },
+      loaderIsVisible() {
+        return this.$store.getters["vuexActionTracker/hasRunningActions"]
       },
     },
   }
