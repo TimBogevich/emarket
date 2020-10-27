@@ -153,17 +153,17 @@
               <v-list-item link v-bind="attrs" v-on="on">
                 <v-list-item-content >
                   <v-list-item-title>
-                    <flag :iso="flags[$i18n.locale]" /> 
-                    <span class="ml-1">{{$i18n.locale}}</span>
+                    <flag :iso="selectedLang.flag" /> 
+                    <span class="ml-1">{{selectedLang.name}}</span>
                   </v-list-item-title>
 
                 </v-list-item-content>
               </v-list-item>
             </template>
             <v-list>
-              <v-list-item v-for="(item, index) in langs" :key="index" @click="setLocale(item)">
+              <v-list-item v-for="(item, index) in langs" :key="index" @click="setLocale(item.code)">
                 <v-list-item-title>
-                  <flag :iso="flags[item]" /> {{item.toUpperCase()}}
+                  <flag :iso="item.flag" /> {{item.name}}
                 </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -206,12 +206,11 @@ import appBar from "./components/appBar"
   export default {
     components : {appBar},
     data: () => ({
-      langs: ["en", "de", "ru"],
-      flags: {
-        en : "gb",
-        de : "de",
-        ru : "ru",
-      }
+      langs: [
+        {code :"en", name : "English", flag : "gb"},
+        {code :"de", name : "Deutsch", flag : "de"},
+        {code :"ru", name : "Русский", flag : "ru"},
+      ],
     }),
     computed: {
       categories : get("general/categories"),
@@ -223,6 +222,9 @@ import appBar from "./components/appBar"
       loaderIsVisible() {
         return this.$store.getters["vuexActionTracker/hasRunningActions"]
       },
+      selectedLang() {
+        return this.langs.find(i => i.code === this.$i18n.locale)
+      }
     },
     methods: {
       setLocale(locale) {
