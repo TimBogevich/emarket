@@ -95,7 +95,7 @@ const actions = {
   async loadFilters({ commit, state }, router) {
     commit("SET_FILTERS", [])
     commit("SET_FILTERS_SELECTED", [])
-    let filters = await this._vm.$mdbf.get_filters()
+    let filters = await this._vm.$mdbf.get_filters(router.category)
     filters = filters.map(i => {
       i.text = i._id
       delete i._id
