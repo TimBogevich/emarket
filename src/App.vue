@@ -259,3 +259,7 @@ import appBar from "./components/appBar"
     },
   }
 </script>
+
+<style >
+
+</style>
