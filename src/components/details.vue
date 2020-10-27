@@ -3,7 +3,7 @@
     <v-row v-if="item" class="mt-4 justify-center">
       <v-flex xs11 md2 class="mx-4">
         <ProductZoomer
-        v-if="item.images.length > 0"
+        v-if="images.length > 0"
         :key="zoomerKey"
         :base-images="zoomer" 
         :base-zoomer-options="zoomerOptions"
@@ -14,7 +14,7 @@
           {{item.productName}}
         </h3>
         <p>
-          {{item.description}}
+          {{description}}
         </p>
         <v-row class="align-center">
           <v-flex xs2 class="mx-3">
@@ -85,10 +85,10 @@
               },
             ],
           }
-        if(this.item.images.length == 0) {
+        if(this.images.length == 0) {
           return obj
         } else {
-          let images = this.item.images.map((i, k) => {
+          let images = this.images.map((i, k) => {
             return {
               id: k+1,
               url: i
@@ -109,20 +109,31 @@
         return this.likedItems.find(i => i.pzn == pzn)
       },
       async load(pzn) {
-        let item = await this.$store.dispatch("general/loadDetails")
-        this.item = item
+        await this.$store.dispatch("general/loadDetails")
       },
       likeItem(item) {
         this.$store.dispatch("general/likeItem", item)
       },
+      async parsePage() {
+        let page = await axios.post("https://medpex-proxy-nocors.oskarokb.workers.dev/?target=https://www.medpex.de/" + this.item.medpexLink);
+        const dom = new jsdom.JSDOM(page.data)
+        let doc = dom.window.document
+        let desc = doc.querySelector('.content--productDescription')
+        this.description  = desc?.textContent
+        let imgs = [...doc.querySelectorAll('.swiper-slide > img')].map(i => i.src)
+        this.images = imgs
+        return Promise.resolve(true);
+      }
     },
     watch: {
       async pzn(val, oldVal) {
         await this.load(this.pzn)
+        await this.parsePage()
       }
     },
     async mounted() {
       await this.load(this.pzn)
+      await this.parsePage()
       this.zoomerKey += 1
     },
   }

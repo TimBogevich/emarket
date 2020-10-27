@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import mdb from "./mongoConf"
 import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
@@ -12,6 +13,7 @@ import VuexActionTracker from "vuex-action-tracker";
 import ProductZoomer from 'vue-product-zoomer2'
 import HeadLoader from "vue-ext-files-head-loader";
 import firebase from "./firebaseConf"
+
 Vue.config.productionTip = false
 import FlagIcon from 'vue-flag-icon'
 

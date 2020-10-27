@@ -3,7 +3,7 @@ import axios from 'axios'
 import { make, set, dispatch } from 'vuex-pathify'
 import router from '@/router'
 import i18n from '../../i18n';
-
+import * as Realm from "realm-web";
 
 const  state =  {
   items : [],
@@ -66,16 +66,9 @@ const getters = {
 
 const actions = {
   async loadItem({commit,state}, router) {
-    let preferences = {
-      hitsPerPage: 10,
-      attributesToSnippet: "*:20",
-      page: 0,
-      facetFilters: []
-     }
-    preferences.facetFilters.push(["category:" + router.category])
-    preferences.facetFilters.push(state.filtersSelected.map(i => "packType:" + i.text))
-    let categoryItems = await this._vm.$algolia.search("",preferences)
-    commit("SET_ITEMS", {category : router.category, curPage : 0, nbPages : categoryItems.nbPages, items : categoryItems.hits})
+    let items = await this._vm.$mdbf.get_items(router.category)
+    console.log(items)
+    commit("SET_ITEMS", {category : router.category, curPage : 0, nbPages : 1, items : items.hits})
   },
 
   async loadMore({commit, state}, router) {
@@ -97,26 +90,29 @@ const actions = {
   },
 
   async loadCategories({commit}) {
-    let response = await this._vm.$algolia.search('', {facets: '*', hitsPerPage: 0})
-    let category = Object.entries(response.facets.category).map(i => {
-      return {text : i[0], count : i[1]}
-    }) 
 
-    commit("SET_CATEGORIES", category)
+    let categories = await this._vm.$mdbf.get_categories()
+    categories = categories.map(i => {
+      i.text = i._id
+      delete i._id
+      return i
+    })
+    commit("SET_CATEGORIES", categories)
   },
 
   async loadFilters({commit, state}, router) {
+
     commit("SET_FILTERS", [])
     commit("SET_FILTERS_SELECTED", [])
-    let params = {
-      facets: '*', 
-      hitsPerPage: 0,
-      "facetFilters": [["category:" + router.category]]
-    }
-    let response = await this._vm.$algolia.search('', params)
-    let filters = Object.entries(response.facets.packType).map(i => {
-      return {text : i[0], count : i[1]}
-    }) 
+
+    let filters = await this._vm.$mdbf.get_filters()
+    filters = filters.map(i => {
+      i.text = i._id
+      delete i._id
+      return i
+    })
+
+
     commit("SET_FILTERS", filters)
   },
   filtersSeletedRemove({state}, index) {

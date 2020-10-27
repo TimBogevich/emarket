@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row>
+    <v-row class="mx-1">
       <swiper ref="test" class="swiper" :options="headSwiperOption">
         <swiper-slide v-for="(item, index) in carouselItems" :key="index">
             <v-img 
@@ -23,7 +23,7 @@
       </v-flex>
     </v-row>
 
-    <v-row class="justify-center">
+    <v-row class="justify-center mx-1">
       <v-flex xs10 md9>
         <swiper class="swiper" :options="swiperOption">
           <swiper-slide
