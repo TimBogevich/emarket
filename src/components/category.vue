@@ -1,21 +1,31 @@
 <template>
   <div>
       <v-row class="justify-center mx-0">
-      <v-flex xs12 md8>
-        <v-chip 
-        close
-        @click:close="filtersSeletedRemove(index)"  
-        class="mr-3" 
-        v-for="(item, index) in filtersSelected" :key="index">
-          {{$t(`filter.${item.text}`)}}
-        </v-chip>
-      </v-flex>
-      <v-flex xs12 md8>
-        <item 
-        mode = "category"
-        v-for="(item, index) in itemsCategory" :key="index" 
-        :itemsCategory = "item" />
-      </v-flex>
+        <v-flex xs12 md8>
+          <v-chip 
+          close
+          @click:close="filtersSeletedRemove(index)"  
+          class="mr-3" 
+          v-for="(item, index) in filtersSelected" :key="index">
+            {{$t(`filter.${item.text}`)}}
+          </v-chip>
+        </v-flex>
+
+        <v-flex xs12 md8>
+          <item 
+          mode = "category"
+          v-for="(item, index) in itemsCategory" :key="index" 
+          :itemsCategory = "item" />
+        </v-flex>
+
+        <v-flex v-if="loader" xs12 md8>
+          <v-skeleton-loader
+            type="card"
+            class="mb-2"
+            v-for="n in 12" :key="n"
+            max-height="158"
+          ></v-skeleton-loader>
+        </v-flex>
     </v-row>
 
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
@@ -76,7 +86,10 @@ export default {
     },
     router() {
       return this.$route.params
-    }
+    },
+    loader() {
+      return this.$store.getters["vuexActionTracker/hasRunningActions"](['general/loadMore'])
+    },
   },
 
   watch: {
