@@ -14,7 +14,7 @@ export default new Vuex.Store({
   plugins: [
     pathify.plugin,
     createPersistedState({
-      paths: []
+      paths: ["general.locale"]
     })
   ],
   modules: {

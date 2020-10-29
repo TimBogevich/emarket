@@ -208,6 +208,7 @@ import appBar from "./components/appBar"
     }),
     computed: {
       categories : get("general/categories"),
+      locale: sync("general/locale"),
       user: sync("general/user"),
       drawer: sync("general/drawer"),
       filtersSelected: sync("general/filtersSelected"),
@@ -248,6 +249,9 @@ import appBar from "./components/appBar"
       }
     },
     mounted() {
+      let locale =
+        this.locale || navigator.language.substring(0, 2).toLowerCase();
+      this.$i18n.locale = this.langs.map(i => i.code).includes(locale) ? locale : "en";
       this.$store.dispatch("general/loadCategories")
       this.login()
     },

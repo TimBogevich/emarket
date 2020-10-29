@@ -19,6 +19,7 @@ const state = {
   cart: [],
   user: null,
   messages: [],
+  locale : null,
 
 }
 
