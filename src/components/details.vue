@@ -11,7 +11,7 @@
       </v-flex>
       <v-flex xs11 md4 class="mx-4">
         <h3 >
-          {{productName}}
+          {{item.productName}}
         </h3>
         <p>
           {{description}}
@@ -44,13 +44,11 @@
 </template>
 
 <script>
-  import item from './item'
   import axios from "axios"
   import jsdom from "jsdom"
   import {get,sync} from 'vuex-pathify'
 
   export default {
-    components : {item},
     data() {
       return {
         zoomerKey : 1,
@@ -72,18 +70,10 @@
     },
     computed: {
       likedItems: get("general/likedItems"),
-      productName() {
-        return this.$route.params.productName
-      },
       pzn() {
         return this.$route.params.pzn
       },
-      item() {
-        return this.$route.params.itemsCategory
-      },
-      medpexLink() {
-        return this.$route.params.medpexLink
-      },
+
       zoomer() {
         let obj = {
             thumbs : [],
@@ -118,13 +108,17 @@
         return this.likedItems.find(i => i.pzn == pzn)
       },
       async load(pzn) {
-        await this.$store.dispatch("general/loadDetails")
+        let items = await this.$mdbf.get_item_by_pzn(this.pzn)
+        if(items.length > 0) {
+          this.item = items[0]
+          return Promise.resolve(true);
+        }
       },
       likeItem(item) {
         this.$store.dispatch("general/likeItem", item)
       },
       async parsePage() {
-        let page = await axios.post("https://medpex-proxy-nocors.oskarokb.workers.dev/?target=https://www.medpex.de/" + this.medpexLink);
+        let page = await axios.post("https://medpex-proxy-nocors.oskarokb.workers.dev/?target=https://www.medpex.de/" + this.item.medpexLink);
         const dom = new jsdom.JSDOM(page.data)
         let doc = dom.window.document
         let desc = doc.querySelector('.content--productDescription')

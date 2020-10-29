@@ -257,13 +257,6 @@ const actions = {
       commit("SET_MESSAGES", [])
     }
   },
-  async loadDetails() {
-
-
-  },
-  async parsePage() {
-
-  }
 }
 
 

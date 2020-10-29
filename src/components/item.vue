@@ -8,7 +8,7 @@
       <!-- MOBILE -->
       <v-row class="mx-4" v-if="isMobile">
         <v-row>
-          <router-link class="link" :to="`/details/${itemsCategory.pzn}`">
+          <router-link class="link" :to="{name : 'details', params : {pzn : itemsCategory.pzn} }">
             <v-card-title class="subtitle-1 font-weight-bold">
               {{itemsCategory.productName}}
             </v-card-title>
@@ -64,7 +64,7 @@
           <v-img max-width="100" :src="itemsCategory.image"></v-img>
         </v-flex>
         <v-flex xs10 md8>
-          <router-link class="link" :to="{name : 'details', params : {itemsCategory: itemsCategory,item : itemsCategory.pzn, productName : itemsCategory.productName, medpexLink : itemsCategory.medpexLink} }">
+          <router-link class="link" :to="{name : 'details', params : {pzn : itemsCategory.pzn} }">
             <v-card-title primary-title>
               {{itemsCategory.productName}}
             </v-card-title>
