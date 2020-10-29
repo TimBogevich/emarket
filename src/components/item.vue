@@ -64,7 +64,7 @@
           <v-img max-width="100" :src="itemsCategory.image"></v-img>
         </v-flex>
         <v-flex xs10 md8>
-          <router-link class="link" :to="`/details/${itemsCategory.pzn}`">
+          <router-link class="link" :to="{name : 'details', params : {itemsCategory: itemsCategory,item : itemsCategory.pzn, productName : itemsCategory.productName, medpexLink : itemsCategory.medpexLink} }">
             <v-card-title primary-title>
               {{itemsCategory.productName}}
             </v-card-title>

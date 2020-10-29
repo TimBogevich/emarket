@@ -11,7 +11,7 @@
       </v-flex>
       <v-flex xs11 md4 class="mx-4">
         <h3 >
-          {{item.productName}}
+          {{productName}}
         </h3>
         <p>
           {{description}}
@@ -72,8 +72,17 @@
     },
     computed: {
       likedItems: get("general/likedItems"),
+      productName() {
+        return this.$route.params.productName
+      },
       pzn() {
         return this.$route.params.pzn
+      },
+      item() {
+        return this.$route.params.itemsCategory
+      },
+      medpexLink() {
+        return this.$route.params.medpexLink
       },
       zoomer() {
         let obj = {
@@ -115,7 +124,7 @@
         this.$store.dispatch("general/likeItem", item)
       },
       async parsePage() {
-        let page = await axios.post("https://medpex-proxy-nocors.oskarokb.workers.dev/?target=https://www.medpex.de/" + this.item.medpexLink);
+        let page = await axios.post("https://medpex-proxy-nocors.oskarokb.workers.dev/?target=https://www.medpex.de/" + this.medpexLink);
         const dom = new jsdom.JSDOM(page.data)
         let doc = dom.window.document
         let desc = doc.querySelector('.content--productDescription')
