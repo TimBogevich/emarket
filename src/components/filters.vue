@@ -5,6 +5,7 @@
       v-for="(item, index) in filters" :key="index"
       v-model="filtersSelected"
       :value="item" 
+      @click="$vuetify.goTo(1)"
       :value-comparator="comparator"
       color="red"
       hide-details

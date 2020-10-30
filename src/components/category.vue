@@ -28,8 +28,7 @@
         </v-flex>
     </v-row>
 
-    <mugen-scroll :handler="loadMore" :should-handle="Boolean(itemsCategory.length > 0)"></mugen-scroll>
-
+    <mugen-scroll :handler="loadMore" :should-handle="Boolean(enableAutoload)"></mugen-scroll> 
 
     <v-menu
       absolute
@@ -90,6 +89,9 @@ export default {
     loader() {
       return this.$store.getters["vuexActionTracker/hasRunningActions"](['general/loadMore'])
     },
+    enableAutoload() {
+      return this.items.curPage < this.items.nbPages
+    }
   },
 
   watch: {

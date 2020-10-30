@@ -52,6 +52,7 @@
     "vue-flag-icon": "^1.0.6",
     "vue-i18n": "^8.22.0",
     "vue-i18n-scanner": "^1.0.2",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-modal-dialogs": "^3.0.0",
     "vue-moment": "^4.1.0",
     "vue-mugen-scroll": "^0.2.6",
