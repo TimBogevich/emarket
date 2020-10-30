@@ -8,7 +8,6 @@ import 'vuetify/dist/vuetify.css'
 import '@mdi/font/css/materialdesignicons.css'
 import i18n from './i18n'
 import * as ModalDialogs from 'vue-modal-dialogs'
-import algolia from './algoliaConf'
 import VuexActionTracker from "vuex-action-tracker";
 import ProductZoomer from 'vue-product-zoomer2'
 import HeadLoader from "vue-ext-files-head-loader";
@@ -29,7 +28,6 @@ const dialogCardPayment = ModalDialogs.create({component: cardPayment, wrapper: 
 Vue.prototype.$areYouSure = dialogAreYouSure
 Vue.prototype.$dialogLogin = dialogLogin
 Vue.prototype.$dialogCardPayment = dialogCardPayment
-Vue.prototype.$algolia = algolia
 
 
 Vue.use(FlagIcon);
