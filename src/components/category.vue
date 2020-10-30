@@ -90,7 +90,7 @@ export default {
     items: get("general/items"),
     filtersSelected: get("general/filtersSelected"),
     itemsCategory() {
-      return this.items.items ? this.items.items : []
+      return this.items.hits ? this.items.hits : []
     },
     router() {
       return this.$route.params
