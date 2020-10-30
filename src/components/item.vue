@@ -112,7 +112,7 @@
             </v-flex>
 
 
-            <v-flex flex-direction: row xs5 class="justify-end">
+            <v-flex flex-direction: row xs7 class="justify-end">
               <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">{{$t("item.toCart")}}</v-btn>
               <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" color="accent">{{$t("item.delete")}}</v-btn>
             </v-flex>

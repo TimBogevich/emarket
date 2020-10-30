@@ -18,6 +18,7 @@
           :itemsCategory = "item" />
         </v-flex>
 
+
         <v-flex v-if="loader" xs12 md8>
           <v-skeleton-loader
             type="card"
@@ -29,6 +30,14 @@
     </v-row>
 
     <mugen-scroll :handler="loadMore" :should-handle="Boolean(enableAutoload)"></mugen-scroll> 
+
+        <v-flex xs12 v-if="enableAutoload">
+          <v-sheet
+            color="white"
+            height="400"
+          ></v-sheet>
+        </v-flex>
+
 
     <v-menu
       absolute
