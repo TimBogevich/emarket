@@ -105,7 +105,7 @@
         <v-list-item
           v-for="(cat, index) in categories"
           :key="index"
-          @click="$vuetify.goTo(1)"
+          @click="$vuetify.goTo(0)"
           :to="`/categiory/${cat.text}`"
           link
         >

@@ -2,29 +2,28 @@
   <div>
     <v-card
     color="#FEFEFE" 
-    class="my-2"
     >
 
       <!-- MOBILE -->
       <v-row class="mx-4" v-if="isMobile">
         <v-row>
-          <router-link class="link" :to="{name : 'details', params : {pzn : itemsCategory.pzn} }">
+          <router-link class="link" :to="{name : 'details', params : {pzn : source.pzn} }">
             <v-card-title class="subtitle-1 font-weight-bold">
-              {{itemsCategory.productName}}
+              {{source.productName}}
             </v-card-title>
           </router-link>
         </v-row>
         <v-row>
           <v-flex class="ml-3" xs2>
-            <v-img max-width="100" :src="itemsCategory.image"></v-img>
+            <v-img max-width="100" :src="source.image"></v-img>
 
           <VueResponsiveText class="text-right mt-2 px-2 font-weight-bold">
-            {{itemsCategory.productPrice}} €
+            {{source.productPrice}} €
           </VueResponsiveText>
           </v-flex>
           <v-flex xs9>
             <v-card-text class="ml-2 mr-0 pr-0 mt-0 pt-0 caption">
-              {{itemsCategory.desc}}
+              {{source.desc}}
               <br v-if="mode==='category'">
             </v-card-text>
           </v-flex>
@@ -34,13 +33,13 @@
             <v-select
             class="mx-3 pa-0 my-0"
               :items="selectCount"
-              v-on:input="itemsCategory.selectCountSelected = $event"
-              :value="itemsCategory.selectCountSelected || 1"
+              v-on:input="source.selectCountSelected = $event"
+              :value="source.selectCountSelected || 1"
             ></v-select>
           </v-flex>
 
           <v-flex xs1>
-            <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small icon @click="likeItem(itemsCategory)">
+            <v-btn :color="isLiked(source.pzn) ? 'red' : null" small icon @click="likeItem(source)">
               <v-icon>
                 mdi-heart
               </v-icon>
@@ -48,8 +47,8 @@
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex xs6>
-            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">{{$t("item.toCart")}}</v-btn>
-            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" text>{{$t("item.toCart")}}</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='category'" @click="toCart(source)" color="success">{{$t("item.toCart")}}</v-btn>
+            <v-btn small class="mx-2 px-5" v-if="mode==='cart'" @click="deleteFromCart(index, source)" text>{{$t("item.toCart")}}</v-btn>
           </v-flex>
 
 
@@ -59,36 +58,36 @@
       </v-row>
 
       <!-- Desktop -->
-      <v-row v-else class="align-top my-2 mx-10">
+      <v-row v-else class="align-top mx-10">
         <v-flex xs2 md1 class="mt-3">
-          <v-img max-width="100" :src="itemsCategory.image"></v-img>
+          <v-img max-width="100" :src="source.image"></v-img>
         </v-flex>
         <v-flex xs10 md8>
-          <router-link class="link" :to="{name : 'details', params : {pzn : itemsCategory.pzn} }">
+          <router-link class="link" :to="{name : 'details', params : {pzn : source.pzn} }">
             <v-card-title primary-title>
-              {{itemsCategory.productName}}
+              {{source.productName}}
             </v-card-title>
           </router-link>
           <v-card-text >
-            {{itemsCategory.desc}}
+            {{source.desc}}
             <br v-if="mode==='category'">
-            <a v-if="mode==='category'" :href="'https://www.medpex.de' + itemsCategory.medpexLink" target="_blank">{{$t("item.linkToMedpex")}}</a>
+            <a v-if="mode==='category'" :href="'https://www.medpex.de' + source.medpexLink" target="_blank">{{$t("item.linkToMedpex")}}</a>
           </v-card-text>
         </v-flex>
         <v-flex xs12 md3 >
           <v-row class="justify-end">
             <v-card-title primary-title class="font-weight-bold">
-                {{itemsCategory.productPrice}} €
+                {{source.productPrice}} €
             </v-card-title>
           </v-row>
-          <v-row v-if="itemsCategory.selectCountSelected > 1" class="justify-end mr-3">
+          <v-row v-if="source.selectCountSelected > 1" class="justify-end mr-3">
             <span class="caption">
-              {{(itemsCategory.productPrice * itemsCategory.selectCountSelected).toFixed(2)}} €
+              {{(source.productPrice * source.selectCountSelected).toFixed(2)}} €
             </span>
           </v-row>
           <v-row class="justify-end align-center">
             <v-flex xs1 class="mx-2">
-              <v-btn :color="isLiked(itemsCategory.pzn) ? 'red' : null" small class="ma-2" icon @click="likeItem(itemsCategory)">
+              <v-btn :color="isLiked(source.pzn) ? 'red' : null" small class="ma-2" icon @click="likeItem(source)">
                 <v-icon>
                   mdi-heart
                 </v-icon>
@@ -97,24 +96,24 @@
 
             <v-flex xs3 class="mx-3">
               <v-text-field
-              v-if="itemsCategory.selectCountSelected > 20"
+              v-if="source.selectCountSelected > 20"
               v-on:input="changeAmount($event)"
-              :value="itemsCategory.selectCountSelected"
+              :value="source.selectCountSelected"
               ></v-text-field>
               <v-select
               v-else
               class="ma-2"
                 :items="selectCount"
                 v-on:input="changeAmount($event)"
-                :value="itemsCategory.selectCountSelected || 1"
+                :value="source.selectCountSelected || 1"
               ></v-select>
 
             </v-flex>
 
 
             <v-flex flex-direction: row xs7 class="justify-end">
-              <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(itemsCategory)" color="success">{{$t("item.toCart")}}</v-btn>
-              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(ind, itemsCategory)" color="accent">{{$t("item.delete")}}</v-btn>
+              <v-btn small class="ma-2" v-if="mode==='category'" @click="toCart(source)" color="success">{{$t("item.toCart")}}</v-btn>
+              <v-btn small v-if="mode==='cart'" @click="deleteFromCart(index, source)" color="accent">{{$t("item.delete")}}</v-btn>
             </v-flex>
 
           </v-row>
@@ -133,7 +132,25 @@ export default {
   components: {
     VueResponsiveText
   },
-  props : ["itemsCategory", "mode", "ind"],
+
+  props: {
+    index: { // index of current item
+        type: Number
+      },
+    source: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    mode: {
+      type: String,
+      default() {
+        return "category"
+      }
+    },
+  },
+
   data() {
     return {
       selectCount : [
@@ -166,8 +183,8 @@ export default {
   },
   methods: {
     changeAmount(v) {
-      this.itemsCategory.selectCountSelected = v
-      this.itemsCategory = Object.assign({}, this.itemsCategory)
+      this.source.selectCountSelected = v
+      this.source = Object.assign({}, this.source)
     },
     toCart(item) {
       let obj = Object.assign({}, item)

@@ -11,12 +11,20 @@ const routes = [
     component: home,
   },
   {
-    path: '/categiory/:category',
-    name: 'categiory',
+    path: '/categiory_old/:category',
+    name: 'categiory_old',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "category" */ '../views/category.vue')
+  },
+  {
+    path: '/categiory/:category',
+    name: 'category',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "category" */ '../components/category_new.vue')
   },
   {
     path: '/account',

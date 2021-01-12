@@ -61,6 +61,7 @@
     "vue-quick-chat": "^1.2.6",
     "vue-responsive-text": "^0.1.4",
     "vue-router": "^3.2.0",
+    "vue-virtual-scroll-list": "^2.3.1",
     "vuetify": "^2.3.12",
     "vuex": "^3.4.0",
     "vuex-action-tracker": "0.0.5",

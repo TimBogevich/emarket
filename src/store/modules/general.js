@@ -67,10 +67,11 @@ const getters = {
 
 const actions = {
   async loadItem({ commit, state }, router) {
+    commit("SET_ITEMS", [])
     let filters = state.filtersSelected.map(i => i.text)
     filters = filters.length ? filters : ""
     let items = await this._vm.$mdbf.get_items(router.category, filters)
-    commit("SET_ITEMS", { category: router.category, curPage: items.curPage, nbPages: items.nbPages, items: items.hits })
+    commit("SET_ITEMS", { category: router.category, ...items })
   },
 
   async loadMore({ commit, state }, router) {
@@ -78,7 +79,7 @@ const actions = {
     filters = filters.length ? filters : ""
     state.items.curPage = state.items.curPage + 1
     let items = await this._vm.$mdbf.get_items(router.category, filters, state.items.curPage)
-    state.items.items = state.items.items.concat(items.hits)
+    state.items.hits = state.items.hits.concat(items.hits)
     commit("SET_ITEMS", state.items)
   },
 
