@@ -88,7 +88,9 @@
           </v-img>
         </v-row>
         <v-row class="justify-center">
-          <strong class="text--disabled">Упс.. корзина пуста</strong>
+          <strong class="text--disabled">
+            {{$t("cart.emptyCart")}}
+          </strong>
         </v-row>
       </v-flex>
     </v-row>

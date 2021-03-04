@@ -36,7 +36,8 @@
     "dialogLogin": "Anmeldung erforderlich",
     "orderWillBeDeliverd": "Die Bestellung wird an die Adresse gesendet",
     "service": "Bedienung",
-    "to": "angesprochen"
+    "to": "angesprochen",
+    "emptyCart": "Ups .. der Wagen ist leer"
   },
   "contacts": {
     "chatTitle": "Live-Chat",
