@@ -8,7 +8,9 @@
           :label="$t('delivery.chooseCountriy')"
         ></v-select>
 
-        <p> {{$t("delivery.row1")}} <a target="_blank" href="https://www.dhl.de/en/privatkunden/pakete-versenden/weltweit-versenden/preise-international.html">на сайте DHL</a> </p>
+        <p> {{$t("delivery.row1")}} <a target="_blank" href="https://www.dhl.de/en/privatkunden/pakete-versenden/weltweit-versenden/preise-international.html">
+        {{$t("delivery.onDHLsite")}}
+        </a> </p>
         <p>{{$t("delivery.row2")}}</p>
         <p>{{$t("delivery.row3")}}  </p>
           <li>{{$t("delivery.row4")}}</li>

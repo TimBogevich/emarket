@@ -176,6 +176,7 @@
     "placeholder": "send a message"
   },
   "delivery": {
+    "onDHLsite": "on DHL site",
     "chooseCountriy": "select a country",
     "row1": "Shipping is via DHL, see details",
     "row2": "In addition, a service fee of 50 EUR is charged",
