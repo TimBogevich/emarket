@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h5>Тип упаковки</h5>
+    <h5>
+      {{$t("filter.packType")}}
+    </h5>
     <v-checkbox 
       v-for="(item, index) in filters" :key="index"
       v-model="filtersSelected"

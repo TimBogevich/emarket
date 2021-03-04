@@ -37,6 +37,7 @@
     "yes": "Yes"
   },
   "filter": {
+    "packType": "Pack type",
     "ampullen": "ampoules",
     "augencreme": "eye cream",
     "bad": "bath",
