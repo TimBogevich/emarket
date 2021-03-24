@@ -1,4 +1,6 @@
 # apotheke
+# DEMO
+https://farm.brocco.me/
 
 ## Project setup
 ```
